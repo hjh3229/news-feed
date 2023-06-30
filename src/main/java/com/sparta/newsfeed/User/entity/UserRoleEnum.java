@@ -1,4 +1,4 @@
-package com.sparta.newsfeed.User.User.entity;
+package com.sparta.newsfeed.User.entity;
 
 public enum UserRoleEnum {
     USER(Authority.USER),  // 사용자 권한

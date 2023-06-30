@@ -1,4 +1,4 @@
-package com.sparta.newsfeed.Feed.Feed.dto;
+package com.sparta.newsfeed.Feed.dto;
 
 import com.sparta.newsfeed.Feed.entity.Feed;
 
