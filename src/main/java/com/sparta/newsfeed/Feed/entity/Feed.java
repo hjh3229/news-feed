@@ -31,7 +31,11 @@ public class Feed {
     private  User user;
 
     public Feed(FeedRequestDto feedRequestDto, User user) {
-        this.title = feedRequestDto.getTitle();
+        if (feedRequestDto.getTitle() == null) {
+            this.title = feedRequestDto.getUrl();
+        } else {
+            this.title = feedRequestDto.getTitle();
+        }
         this.url = feedRequestDto.getUrl();
         this.contents = feedRequestDto.getContents();
         this.user = user;
