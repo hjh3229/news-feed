@@ -3,15 +3,13 @@ package com.sparta.newsfeed.Common.config;
 import com.sparta.newsfeed.Common.jwt.JwtUtil;
 import com.sparta.newsfeed.Common.security.JwtAuthenticationFilter;
 import com.sparta.newsfeed.Common.security.JwtAuthorizationFilter;
-import com.sparta.newsfeed.Common.security.UserDetailsImpl;
-import com.sparta.newsfeed.Common.security.UserServiceImpl;
+import com.sparta.newsfeed.Common.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,19 +22,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity // Spring Security 지원을 가능하게 함
 @RequiredArgsConstructor
 public class WebSecurityConfig {
-    // Spring Security
-    // Fitter 기반
+    // Spring Security   Fitter 기반
+
     // 기억해야 할것
     // Security 필터를 통해 인증 및 허가
-    // 1) name,password 필터에서 name,password 확인 후, token(인증 토큰)(not jwt) 발급하여  (name,password 필터 생성)
-    // 2) 인증 매니저에게 전달                                                  (인증매니저 bean 생성 -> name,password 필터에 넣어줌)
-    // 3) 인증 매니저는 토큰을 가지고 인증절차를 진행 함.
-    // -> 인증 완료 -> SecurityContextHolder안에 SecurityContext에 회원 정보(entity) 저장 ({UserDetail->(principal)}이 Holder안에 저장. )
-    // -> UserDetailsService-> Repository조회 -> data -> UserDetail
 
+    // 1) name,password 필터에서 name,password 확인 후, token(인증 토큰)(not jwt) 발급하여,
+    // {->  bean 생성(jwt방식이기 때문에 따로 상속 받아 다시 만듬)}
+
+    // 2) 인증 매니저에게 전달 (인증 매니저는 인증 토큰을 가지고 인증절차를 진행 후 JWT 토큰 발급)
+    //{ -> 인증매니저 bean 생성 -> name,password 필터안에 매니져를 넣어준다 생각}
+
+    // 3) 클라이언트에게서 요청받은 JWT검증을 하기 위한 필터 생성
+    // {->  bean 생성(jwt방식이기 때문에 따로 상속 받아 다시 만듬)}
 
     private final JwtUtil jwtUtil;
-    private final UserServiceImpl userService;
+    private final UserDetailsServiceImpl userService;
     private final AuthenticationConfiguration authenticationConfiguration;
 
     @Bean
@@ -44,10 +45,12 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    //ioc container bean 생성
+
+
+
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
-       return authenticationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }// AuthenticationConfiguration (인증 환경설정) 을 받아서, AuthenticationManager 를 생성.
 
     @Bean
@@ -60,7 +63,8 @@ public class WebSecurityConfig {
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter() {
         return new JwtAuthorizationFilter(jwtUtil, userService);
-    } //인가필터 객체 생성
+    } //허가 필터 객체 생성
+
 
 
 
@@ -68,7 +72,7 @@ public class WebSecurityConfig {
     // CSRF?
     // JWT 인증 방식 Or session
     // path 허가 권한
-    // 로그인 페이지 설정 (js)
+    // 로그인 페이지(formlogin) 설정 (js)
     // filter 순서 설정
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -84,7 +88,8 @@ public class WebSecurityConfig {
                 authorizeHttpRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
                         .requestMatchers("/").permitAll() // 메인 페이지 요청 허가
-                        .requestMatchers("/api/user/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
+                        .requestMatchers("/newsfeed/user/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
+                        .requestMatchers("/newsfeed/feeds/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         );
 

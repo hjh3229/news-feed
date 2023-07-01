@@ -1,7 +1,10 @@
 package com.sparta.newsfeed.Common.jwt;
 
+import com.sparta.newsfeed.Common.dto.LoginResponseDto;
 import com.sparta.newsfeed.User.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 @Slf4j(topic = "JwtUtil")
@@ -27,6 +31,12 @@ public class JwtUtil {
     @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
     private String secretKey;
     private Key key;
+
+    @PostConstruct
+    public void init() {
+        byte[] bytes = Base64.getDecoder().decode(secretKey);
+        key = Keys.hmacShaKeyFor(bytes);
+    }
 
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
@@ -74,6 +84,9 @@ public class JwtUtil {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
+    public LoginResponseDto loginSuccess(){
+        return new LoginResponseDto("Login Suceess",200);
+    }
 }
 
 
