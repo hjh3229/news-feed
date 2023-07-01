@@ -19,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity // Spring Security 지원을 가능하게 함
+@EnableWebSecurity // Spring Security 지원
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     // Spring Security   Fitter 기반
@@ -92,6 +92,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/newsfeed/feeds/**").permitAll() // Feed 조회 요청 모두 접근 허가
                         .requestMatchers("/newsfeed/folders/**").permitAll() // folder 조회 요청 모두 접근 허가
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
+
         );
 
 //        http.formLogin((formLogin) ->
@@ -99,7 +100,9 @@ public class WebSecurityConfig {
 //                        .loginPage("/api/user/login-page").permitAll()
 //        );
 
-        // 필터 관리
+
+
+        // 필터 순서 관리
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
