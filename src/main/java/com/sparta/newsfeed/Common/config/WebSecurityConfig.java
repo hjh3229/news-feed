@@ -88,8 +88,9 @@ public class WebSecurityConfig {
                 authorizeHttpRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
                         .requestMatchers("/").permitAll() // 메인 페이지 요청 허가
-                        .requestMatchers("/newsfeed/user/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
-                        .requestMatchers("/newsfeed/feeds/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
+                        .requestMatchers("/newsfeed/user/**").permitAll() // 회원가입, 로그인 요청 모두 접근 허가
+                        .requestMatchers("/newsfeed/feeds/**").permitAll() // Feed 조회 요청 모두 접근 허가
+                        .requestMatchers("/newsfeed/folders/**").permitAll() // folder 조회 요청 모두 접근 허가
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         );
 
