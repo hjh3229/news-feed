@@ -12,7 +12,6 @@ public class FeedResponseDto {
     private String title;
     private String url;
     private String contents;
-//    private String msg;
 
 //    private List<FolderResponseDto> feedFolderList = new ArrayList<>();
 
@@ -21,7 +20,6 @@ public class FeedResponseDto {
         this.title = feed.getTitle();
         this.url = feed.getUrl();
         this.contents = feed.getContents();
-//        this.msg = feedSuccess;
 //        for (FeedFolder feedFolder : Feed.getFeedFolderList()) {
 //            feedFolderList.add(new FolderResponseDto(feedFolder.getFolder()));
 //        }

@@ -47,4 +47,10 @@ public class Feed {
         this.contents = feedRequestDto.getContents();
         this.user = user;
     }
+
+    public void update(FeedRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.url = requestDto.getUrl();
+        this.contents = requestDto.getContents();
+    }
 }
