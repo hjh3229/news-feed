@@ -1,5 +1,8 @@
 package com.sparta.newsfeed.User.dto;
 
+import lombok.Getter;
+
+@Getter
 public class SignupResponseDto {
 
     private String username;

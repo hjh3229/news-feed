@@ -1,4 +1,4 @@
-package com.sparta.newsfeed.User.dto;
+package com.sparta.newsfeed.Common.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,10 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SignupRequestDto {
+public class LoginRequestDto {
 
     private String username;
     private String password;
-    private String email;
 
 }
