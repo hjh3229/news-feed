@@ -2,7 +2,7 @@
 
 ERD
 
-![erd](https://github.com/hjh3229/news-feed/assets/110877415/238523da-9846-488f-b9fb-b4fcad155e59)
+![erd](https://github.com/hjh3229/news-feed/assets/110877415/baad6e1b-32f5-46ef-a7e6-2ef4a3cfd415)
 
 API
 
