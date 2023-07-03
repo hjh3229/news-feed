@@ -29,11 +29,24 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
+    @Column()
+    private String nickname;
+
+    @Column()
+    private String my_content;
+
+
+
 
     public User(String username, String password,String email, UserRoleEnum role) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+    }
+
+    public void update(String nickname, String myComment) {
+        this.nickname=nickname;
+        this.my_content=myComment;
     }
 }
