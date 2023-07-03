@@ -33,14 +33,25 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
+    @Column()
+    private String nickname;
+
+    @Column()
+    private String my_content;
+
     @OneToMany(mappedBy = "user")
     private List<Feed> feeds = new ArrayList(); // 양방향성을 위해 추가 (한지훈)
-
+  
 
     public User(String username, String password,String email, UserRoleEnum role) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+    }
+
+    public void update(String nickname, String myComment) {
+        this.nickname=nickname;
+        this.my_content=myComment;
     }
 }
