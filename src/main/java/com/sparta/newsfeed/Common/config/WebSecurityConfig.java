@@ -91,6 +91,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/newsfeed/user/**").permitAll() // 회원가입, 로그인 요청 모두 접근 허가
                         .requestMatchers("/newsfeed/feeds/**").permitAll() // Feed 조회 요청 모두 접근 허가
                         .requestMatchers("/newsfeed/folders/**").permitAll() // folder 조회 요청 모두 접근 허가
+                        .requestMatchers("/newsfeed/user-info/").permitAll()
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
 
         );

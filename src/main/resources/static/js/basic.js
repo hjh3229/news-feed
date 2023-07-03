@@ -9,23 +9,16 @@ $(document).ready(function () {
             jqXHR.setRequestHeader('Authorization', auth);
         });
     }
-    // else {
-    //     window.location.href = host + '/api/user/login-page';
-    //     return;
-    // }
 
     $.ajax({
         type: 'GET',
-        url: `/newsfeed/user/user-info`,
+        url: `/newsfeed/user-info`,
         contentType: 'application/json',
     })
         .done(function (res) {
             const username = res.username;
-
             $('#username').text(username);
-
         })
-
 })
 
 function getToken() {
