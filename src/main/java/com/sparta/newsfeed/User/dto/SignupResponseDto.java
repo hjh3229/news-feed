@@ -1,5 +1,6 @@
 package com.sparta.newsfeed.User.dto;
 
+import com.sparta.newsfeed.User.entity.User;
 import lombok.Getter;
 
 @Getter
@@ -10,8 +11,8 @@ public class SignupResponseDto {
     private String msg;
 
 
-    public SignupResponseDto(String username, String msg) {
-        this.username = username;
+    public SignupResponseDto(User user, String msg) {
+        this.username = user.getUsername();
         this.msg = msg;
     }
 }
