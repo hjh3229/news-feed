@@ -18,7 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public SignupResponseDto createUser(SignupRequestDto requestDto) {
+    public void createUser(SignupRequestDto requestDto) {
 
         // 회원 중복 확인
         Optional<User> checkUsername = userRepository.findByUsername(requestDto.getUsername());
@@ -46,8 +46,7 @@ public class UserService {
 //            role = UserRoleEnum.ADMIN;
 //        }
 
-        User user = new User(requestDto.getPassword(), password, requestDto.getEmail(), role);
+        User user = new User(requestDto.getUsername(), password, requestDto.getEmail(), role);
         userRepository.save(user);
-        return new SignupResponseDto(user.getUsername(), "Signup Success");
     }
 }
