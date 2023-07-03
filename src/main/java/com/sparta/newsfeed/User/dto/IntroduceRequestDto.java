@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public class IntroduceRequestDto {
     private String nickname;
-    private String my_comment;
+    private String my_content;
 }

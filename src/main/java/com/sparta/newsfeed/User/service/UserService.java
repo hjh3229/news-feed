@@ -58,16 +58,16 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(()->
                 new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
 
-        user.update(requestDto.getNickname(), requestDto.getMy_comment());
+        user.update(requestDto.getNickname(), requestDto.getMy_content());
 
-        return new IntroduceResponseDto(requestDto.getMy_comment(),requestDto.getNickname());
+        return new IntroduceResponseDto(user);
     }
 
     public IntroduceResponseDto selecteIntroduce(Long id) {
         User user = userRepository.findById(id).orElseThrow(()->
                 new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
 
-        return new IntroduceResponseDto(user.getNickname(), user.getMy_content());
+        return new IntroduceResponseDto(user);
     }
 
 //    public SignupResponseDto editPassword(SignupRequestDto requestDto) {

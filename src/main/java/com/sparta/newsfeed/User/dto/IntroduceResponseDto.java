@@ -1,16 +1,14 @@
 package com.sparta.newsfeed.User.dto;
 
+import com.sparta.newsfeed.User.entity.User;
+
 public class IntroduceResponseDto {
     private String nickname;
-    private String my_comment;
+    private String my_content;
 
-//    public IntroduceResponseDto(IntroduceRequestDto requestDto) {
-//        this.nickname = requestDto.getNickname();
-//        this.my_comment=requestDto.getMy_comment();
-//    }
 
-    public IntroduceResponseDto(String nickname, String myContent) {
-        this.nickname=nickname;
-        this.my_comment=myContent;
+    public IntroduceResponseDto(User user) {
+        this.nickname=user.getNickname();
+        this.my_content=user.getMy_content();
     }
 }
