@@ -1,9 +1,13 @@
 package com.sparta.newsfeed.User.entity;
 
+import com.sparta.newsfeed.Feed.entity.Feed;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,8 +39,9 @@ public class User {
     @Column()
     private String my_content;
 
-
-
+    @OneToMany(mappedBy = "user")
+    private List<Feed> feeds = new ArrayList(); // 양방향성을 위해 추가 (한지훈)
+  
 
     public User(String username, String password,String email, UserRoleEnum role) {
         this.username = username;
