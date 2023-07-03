@@ -25,7 +25,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
         setFilterProcessesUrl("/newsfeed/user/log-in");
-        //쿠키 세션이라면 Formlogin 쪽 동일한 url path 있음.
     }
 
     @Override
