@@ -1,5 +1,6 @@
 package com.sparta.newsfeed.Feed.entity;
 
+import com.sparta.newsfeed.Comment.entity.Comment;
 import com.sparta.newsfeed.Feed.dto.FeedRequestDto;
 import com.sparta.newsfeed.FeedFolder.entity.FeedFolder;
 import com.sparta.newsfeed.User.entity.User;
@@ -36,6 +37,9 @@ public class Feed {
 
     @OneToMany(mappedBy = "feed")
     private List<FeedFolder> feedFolderList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "feed")
+    private List<Comment> commentList = new ArrayList<>();
 
     public Feed(FeedRequestDto feedRequestDto, User user) { // 피드 수정과 같은 요구사항을 받으므로 update도 생성자 사용
         if (feedRequestDto.getTitle() == null) {
