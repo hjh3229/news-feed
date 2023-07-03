@@ -20,8 +20,9 @@ public class FeedController {
     private final FeedService feedService;
 
     @PostMapping("/feed/{user_id}")
-    public FeedResponseDto create(@AuthenticationPrincipal UserDetailsImpl userdetail, @RequestBody FeedRequestDto requestDto){
-        return feedService.create(userdetail.getUser(),requestDto);
+    public String create(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody FeedRequestDto requestDto){
+        feedService.create(userDetails.getUser(),requestDto);
+        return "redirect:/";
     }
 
     @GetMapping("/feeds/{user_id}")
@@ -34,13 +35,15 @@ public class FeedController {
         return feedService.getFeedsByFolder(folder_id);
     }
 
-    @PutMapping("/feed")
-    public FeedResponseDto updateFeed(@RequestBody FeedRequestDto requestDto, @RequestBody Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return feedService.updateFeed(requestDto, id, userDetails.getUser());
+    @PutMapping("/feed/{id}") // Restful하다고 생각돼서 수정
+    public String updateFeed(@RequestBody FeedRequestDto requestDto, @PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        feedService.updateFeed(requestDto, id, userDetails.getUser());
+        return "redirect:/";
     }
 
-    @DeleteMapping("/feed")
-    public void deleteFeed(@RequestBody Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    @DeleteMapping("/feed/{id}")
+    public String deleteFeed(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         feedService.deleteFeed(id, userDetails.getUser());
+        return "redirect:/";
     }
 }

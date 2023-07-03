@@ -17,8 +17,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/sign-up")
-    public SignupResponseDto createUser(@RequestBody SignupRequestDto requestDto){
-        return userService.createUser(requestDto);
+    public void createUser(@RequestBody SignupRequestDto requestDto){
+        userService.createUser(requestDto);
     }
 
     @PutMapping("/introduce/{user_id}")
