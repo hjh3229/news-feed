@@ -95,10 +95,12 @@ public class WebSecurityConfig {
 
         );
 
-//        http.formLogin((formLogin) ->
-//                formLogin
-//                        .loginPage("/api/user/login-page").permitAll()
-//        );
+        http.formLogin((formLogin) ->
+                formLogin
+                        .loginPage("/newsfeed/user/login-page")
+                        .loginProcessingUrl("/")
+                        .permitAll()
+        );
 
 
 

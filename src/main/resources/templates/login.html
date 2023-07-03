@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+
+    <style>
+        .gradient-custom {
+            background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+</head>
+<body class="gradient-custom">
+<section class="d-flex vh-100">
+    <div class="container-fluid row justify-content-center align-content-center">
+        <div class="card bg-dark" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+                <h2 class="text-white">LOGIN</h2>
+                <p class="text-white-50 mt-2 mb-5">서비스를 사용하려면 로그인을 해주세요</p>
+
+                <div class = "mb-2">
+                        <div class="mb-3">
+                            <label class="form-label text-white">아이디</label>
+                            <input type="text" class="form-control" name="username" id="username">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-white">비밀번호</label>
+                            <input type="password" class="form-control" name="password" id="password">
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="onLogin()">Login</button>
+                    <div class ="mb-3">
+                    <button type="button" class="btn btn-secondary mt-3" onclick="location.href='/newsfeed/user/signup-page'">회원가입</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+
+<script>
+    $(document).ready(function () {
+        // 토큰 삭제
+        Cookies.remove('Authorization', {path: '/'});
+    });
+
+    const href = location.href;
+    const queryString = href.substring(href.indexOf("?") + 1)
+    if (queryString === 'error') {
+        const errorDiv = document.getElementById('login-failed');
+        errorDiv.style.display = 'block';
+    }
+
+    const host = 'http://' + window.location.host;
+
+    function onLogin() {
+        let username = $('#username').val();
+        let password = $('#password').val();
+
+        $.ajax({
+            type: "POST",
+            url: `/newsfeed/user/log-in`,
+            contentType: "application/json",
+            data: JSON.stringify({username: username, password: password}),
+        })
+            .done(function (res, status, xhr) {
+                const token = xhr.getResponseHeader('Authorization');
+
+                Cookies.set('Authorization', token, {path: '/'})
+
+                $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+                    jqXHR.setRequestHeader('Authorization', token);
+                });
+
+                window.location.href = host;
+            })
+            .fail(function (jqXHR, textStatus) {
+                alert("Login Fail");
+                window.location.href = host + '/newsfeed/user/login-page?error'
+            });
+    }
+</script>
+</html>
