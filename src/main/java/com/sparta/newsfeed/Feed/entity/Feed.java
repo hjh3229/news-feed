@@ -1,5 +1,6 @@
 package com.sparta.newsfeed.Feed.entity;
 
+import com.sparta.newsfeed.Comment.entity.Comment;
 import com.sparta.newsfeed.Feed.dto.FeedRequestDto;
 import com.sparta.newsfeed.FeedFolder.entity.FeedFolder;
 import com.sparta.newsfeed.User.entity.User;
@@ -37,19 +38,26 @@ public class Feed {
 //    @OneToMany(mappedBy = "feed")
 //    private List<FeedFolder> feedFolderList = new ArrayList<>();
 
-    public Feed(FeedRequestDto feedRequestDto, User user) { // 피드 수정과 같은 요구사항을 받으므로 update도 생성자 사용
-        if (feedRequestDto.getTitle() == null) {
-            this.title = feedRequestDto.getUrl();
+    @OneToMany(mappedBy = "feed")
+    private List<Comment> commentList = new ArrayList<>();
+
+    public Feed(FeedRequestDto requestDto, User user) { // 피드 수정과 같은 요구사항을 받으므로 update도 생성자 사용
+        if (requestDto.getTitle() == null) {
+            this.title = requestDto.getUrl();
         } else {
-            this.title = feedRequestDto.getTitle();
+            this.title = requestDto.getTitle();
         }
-        this.url = feedRequestDto.getUrl();
-        this.contents = feedRequestDto.getContents();
+        this.url = requestDto.getUrl();
+        this.contents = requestDto.getContents();
         this.user = user;
     }
 
     public void update(FeedRequestDto requestDto) {
-        this.title = requestDto.getTitle();
+        if (requestDto.getTitle() == null) {
+            this.title = requestDto.getUrl();
+        } else {
+            this.title = requestDto.getTitle();
+        }
         this.url = requestDto.getUrl();
         this.contents = requestDto.getContents();
     }

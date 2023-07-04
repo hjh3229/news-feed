@@ -1,11 +1,15 @@
 package com.sparta.newsfeed.Feed.dto;
 
+import com.sparta.newsfeed.Comment.dto.CommentResponseDto;
+import com.sparta.newsfeed.Comment.entity.Comment;
 import com.sparta.newsfeed.Feed.entity.Feed;
 import com.sparta.newsfeed.FeedFolder.entity.FeedFolder;
+import com.sparta.newsfeed.Folder.dto.FolderResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -16,8 +20,9 @@ public class FeedResponseDto {
     private String contents;
     private Long userid;
     private String username;
+    private List<CommentResponseDto> commentList;
 
-//    private List<FolderResponseDto> feedFolderList = new ArrayList<>();
+    private List<FolderResponseDto> feedFolderList = new ArrayList<>();
 
     public FeedResponseDto(Feed feed) {
         this.id = feed.getId();
@@ -26,8 +31,13 @@ public class FeedResponseDto {
         this.contents = feed.getContents();
         this.userid=feed.getUser().getId();
         this.username=feed.getUser().getUsername();
-//        for (FeedFolder feedFolder : Feed.getFeedFolderList()) {
-//            feedFolderList.add(new FolderResponseDto(feedFolder.getFolder()));
-//        }
+        for (FeedFolder feedFolder : feed.getFeedFolderList()) {
+            feedFolderList.add(new FolderResponseDto(feedFolder.getFolder()));
+        }
+        this.commentList = new ArrayList<>();
+        for (Comment comment : feed.getCommentList()) {
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+            this.commentList.add(commentResponseDto);
+        }
     }
 }

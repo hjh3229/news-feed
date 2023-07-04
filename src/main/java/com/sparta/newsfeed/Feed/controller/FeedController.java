@@ -26,24 +26,25 @@ public class FeedController {
         return feedService.create(userdetail.getUser(),requestDto);
     }
 
-//    @GetMapping("/feeds/{user_id}")
-//    public List<FeedResponseDto> getFeedsByUser(@PathVariable Long user_id) {
-//        return feedService.getFeedsByUser(user_id);
-//    }
+    @GetMapping("/feeds/{user_id}")
+    public List<FeedResponseDto> getFeedsByUser(@PathVariable Long user_id) {
+        return feedService.getFeedsByUser(user_id);
+    }
 
-//    @GetMapping("/feeds/{folder_id}")
-//    public List<FeedResponseDto> getFeedsByFolder(@PathVariable Long folder_id) {
-//        return feedService.getFeedsByFolder(folder_id);
-//    }
+    @GetMapping("/feeds/{folder_id}")
+    public List<FeedResponseDto> getFeedsByFolder(@PathVariable Long folder_id) {
+        return feedService.getFeedsByFolder(folder_id);
+    }
 
-
-    @PutMapping("/feed/{id}")
-    public FeedResponseDto updateFeed(@RequestBody FeedRequestDto requestDto, @PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return feedService.updateFeed(requestDto, id, userDetails.getUser());
+    @PutMapping("/feed/{id}") // Restful하다고 생각돼서 수정
+    public String updateFeed(@RequestBody FeedRequestDto requestDto, @PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        feedService.updateFeed(requestDto, id, userDetails.getUser());
+        return "feedlist";
     }
 
     @DeleteMapping("/feed/{id}")
-    public void deleteFeed(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public String deleteFeed(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         feedService.deleteFeed(id, userDetails.getUser());
+        return "feedlist";
     }
 }
