@@ -2,16 +2,16 @@ package com.sparta.newsfeed.User.controller;
 
 
 import com.sparta.newsfeed.Common.security.UserDetailsImpl;
+import com.sparta.newsfeed.User.service.UserService;
+import org.springframework.stereotype.Controller;
 import com.sparta.newsfeed.User.dto.*;
 import com.sparta.newsfeed.Folder.service.FolderService;
-
-import com.sparta.newsfeed.User.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/newsfeed")
 public class UserController {
@@ -19,9 +19,16 @@ public class UserController {
     private final UserService userService;
     private final FolderService folderService;
 
-    @PostMapping("/user/sign-up")
-    public SignupResponseDto createUser(@RequestBody SignupRequestDto requestDto){
-        return userService.createUser(requestDto);
+    @PostMapping("user/sign-up")
+    public String createUser(SignupRequestDto requestDto){
+        userService.createUser(requestDto);
+        return "redirect:/newsfeed/user/login-page";
+    }
+
+    @GetMapping("/user-info")
+    @ResponseBody
+    public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userService.getUserInfo(userDetails);
     }
 
     @PutMapping("/introduce")

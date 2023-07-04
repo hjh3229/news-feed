@@ -18,6 +18,8 @@ public class FeedResponseDto {
     private String title;
     private String url;
     private String contents;
+    private Long userid;
+    private String username;
     private List<CommentResponseDto> commentList;
 
     private List<FolderResponseDto> feedFolderList = new ArrayList<>();
@@ -27,6 +29,8 @@ public class FeedResponseDto {
         this.title = feed.getTitle();
         this.url = feed.getUrl();
         this.contents = feed.getContents();
+        this.userid=feed.getUser().getId();
+        this.username=feed.getUser().getUsername();
         for (FeedFolder feedFolder : feed.getFeedFolderList()) {
             feedFolderList.add(new FolderResponseDto(feedFolder.getFolder()));
         }

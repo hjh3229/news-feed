@@ -35,8 +35,8 @@ public class Feed {
     @JoinColumn(name = "user_id", nullable = false)
     private  User user;
 
-    @OneToMany(mappedBy = "feed")
-    private List<FeedFolder> feedFolderList = new ArrayList<>();
+//    @OneToMany(mappedBy = "feed")
+//    private List<FeedFolder> feedFolderList = new ArrayList<>();
 
     @OneToMany(mappedBy = "feed")
     private List<Comment> commentList = new ArrayList<>();
