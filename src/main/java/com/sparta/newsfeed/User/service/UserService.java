@@ -1,9 +1,6 @@
 package com.sparta.newsfeed.User.service;
 
-import com.sparta.newsfeed.User.dto.IntroduceRequestDto;
-import com.sparta.newsfeed.User.dto.IntroduceResponseDto;
-import com.sparta.newsfeed.User.dto.SignupRequestDto;
-import com.sparta.newsfeed.User.dto.SignupResponseDto;
+import com.sparta.newsfeed.User.dto.*;
 import com.sparta.newsfeed.User.entity.User;
 import com.sparta.newsfeed.User.entity.UserRoleEnum;
 import com.sparta.newsfeed.User.repository.UserRepository;
@@ -71,7 +68,7 @@ public class UserService {
         return new IntroduceResponseDto(user);
     }
 
-    public SignupResponseDto editPassword(User user,SignupRequestDto requestDto) {
+    public SignupResponseDto editPassword(User user, EditPasswordRequestDto requestDto) {
         User userItem= userRepository.findById(user.getId()).orElseThrow(()->new IllegalArgumentException("사용자가 존재하지 않습니다."));
 
         if(!userItem.getPassword().equals(requestDto.getPassword())){

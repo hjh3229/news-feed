@@ -2,10 +2,7 @@ package com.sparta.newsfeed.User.controller;
 
 
 import com.sparta.newsfeed.Common.security.UserDetailsImpl;
-import com.sparta.newsfeed.User.dto.IntroduceRequestDto;
-import com.sparta.newsfeed.User.dto.IntroduceResponseDto;
-import com.sparta.newsfeed.User.dto.SignupRequestDto;
-import com.sparta.newsfeed.User.dto.SignupResponseDto;
+import com.sparta.newsfeed.User.dto.*;
 import com.sparta.newsfeed.User.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,7 +31,7 @@ public class UserController {
     }
 
     @PutMapping("/password")
-    public SignupResponseDto editPassword(@AuthenticationPrincipal UserDetailsImpl userDetails,@RequestBody SignupRequestDto requestDto){
+    public SignupResponseDto editPassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody EditPasswordRequestDto requestDto){
         return  userService.editPassword(userDetails.getUser(),requestDto);
     }
 

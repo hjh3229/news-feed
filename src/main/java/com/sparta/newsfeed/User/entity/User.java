@@ -1,6 +1,7 @@
 package com.sparta.newsfeed.User.entity;
 
 import com.sparta.newsfeed.Feed.entity.Feed;
+import com.sparta.newsfeed.User.dto.EditPasswordRequestDto;
 import com.sparta.newsfeed.User.dto.IntroduceRequestDto;
 import com.sparta.newsfeed.User.dto.SignupRequestDto;
 import jakarta.persistence.*;
@@ -57,7 +58,7 @@ public class User {
         this.my_content= requestDto.getNickname();
     }
 
-    public void updatePassword(SignupRequestDto requestDto) {
+    public void updatePassword(EditPasswordRequestDto requestDto) {
         this.password=requestDto.getPassword();
     }
 }
