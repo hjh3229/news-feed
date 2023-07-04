@@ -38,27 +38,21 @@ public class FeedService {
     }
 
     @Transactional(readOnly = true)
-    public List<FeedResponseDto> getFeedListsByUser(Long userId) {
+    public List<FeedResponseDto> getFeedsByUser(Long userId) {
         return feedRepository.findAllByUserId(userId).stream().map(FeedResponseDto::new).toList();
     }
 
     @Transactional(readOnly = true)
-    public FeedResponseDto getFeed(Long feed_id) {
+    public List<FeedResponseDto> getFeedsByFolder(Long folderId) {
+        List<FeedResponseDto> feedList = feedRepository.findAllByFeedFolderList_FolderId(folderId);
+        return feedList;
+    }
+  
+      public FeedResponseDto getFeed(Long feed_id) {
         Feed feed = feedRepository.findById(feed_id).orElseThrow(
                 ()->new NullPointerException("not found Feed")
         );
         return new FeedResponseDto(feed);
-    }
-
-
-//    @Transactional(readOnly = true)
-//    public List<FeedResponseDto> getFeedsByFolder(Long folderId) {
-//        return feedRepository.findAllByFolderId(folderId).stream().map(FeedResponseDto::new).toList();
-//    }
-    @Transactional(readOnly = true)
-    public List<FeedResponseDto> getFeedsByFolder(Long folderId, User user) {
-        List<FeedResponseDto> feedList = feedRepository.findAllByUserAndFeedFolderList_FolderId(user, folderId);
-        return feedList;
     }
 
     @Transactional
