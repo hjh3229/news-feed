@@ -23,7 +23,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("user/sign-up")
+    @PostMapping("/user/sign-up")
     public String createUser(SignupRequestDto requestDto){
         userService.createUser(requestDto);
         return "redirect:/newsfeed/user/login-page";

@@ -28,10 +28,17 @@ public class FeedService {
     }
 
     @Transactional(readOnly = true)
-    public List<FeedResponseDto> getFeedsByUser(Long userId) {
+    public List<FeedResponseDto> getFeedListsByUser(Long userId) {
         return feedRepository.findAllByUserId(userId).stream().map(FeedResponseDto::new).toList();
     }
 
+    @Transactional(readOnly = true)
+    public FeedResponseDto getFeed(Long feed_id) {
+        Feed feed = feedRepository.findById(feed_id).orElseThrow(
+                ()->new NullPointerException("not found Feed")
+        );
+        return new FeedResponseDto(feed);
+    }
 
 
 //    @Transactional(readOnly = true)

@@ -41,26 +41,25 @@
     </div>
 </div>
 
-
-
-<section class="d-flex vh-100">
-    <div class="container-fluid row justify-content-center align-content-center">
-        <div class="row-6" th:each = "item : ${feed}">
-
-            <div class="card-body p-5 text-center">
-                <h5 class="card-title" th:text="${item.title}"></h5>
-                <h5 class="card-title" th:text="${item.url}"></h5>
-                <h5 class="card-title" th:text="${item.contents}"></h5>
-                <a th:href ="@{/newsfeed/newFeed/{feed_id}(feed_id=${item.id})}"
-                   class="logo" th:text="수정"></a>
-                <br>
-                <button type="button" id="delete-btn"
-                        class="btn btn-secondary btn-sm">삭제</button>
-            </div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <article>
+                <input type="hidden" id="article-id" th:value="${feed.id}">
+                <header class="mb-4">
+                    <input type="text" class="form-control" placeholder="제목" id="title" th:value="${feed.title}">
+                </header>
+                <section class="mb-5">
+                    <textarea class="form-control h-25" rows="10" placeholder="url" id="url" th:text="${feed.url}"></textarea>
+                </section>
+                <section class="mb-5">
+                    <textarea class="form-control h-25" rows="10" placeholder="내용" id="content" th:text="${feed.contents}"></textarea>
+                </section>
+                <button th:if="${feed.id} != null" type="button" id="modify-btn" class="btn btn-primary btn-sm">수정</button>
+                <button th:if="${feed.id} == null" type="button" id="create-btn" class="btn btn-primary btn-sm">등록</button>
+            </article>
         </div>
-        <br>
     </div>
-</section>
-
+</div>
 
 </body>
