@@ -42,12 +42,11 @@ public class FeedService {
         return feedRepository.findAllByUserId(userId).stream().map(FeedResponseDto::new).toList();
     }
 
-
-
-//    @Transactional(readOnly = true)
-//    public List<FeedResponseDto> getFeedsByFolder(Long folderId) {
-//        return feedRepository.findAllByFolderId(folderId).stream().map(FeedResponseDto::new).toList();
-//    }
+    @Transactional(readOnly = true)
+    public List<FeedResponseDto> getFeedsByFolder(Long folderId, User user) {
+        List<FeedResponseDto> feedList = feedRepository.findAllByUserAndFeedFolderList_FolderId(user, folderId);
+        return feedList;
+    }
 
     @Transactional
     public void updateFeed(FeedRequestDto requestDto, Long id, User user) {
@@ -92,18 +91,4 @@ public class FeedService {
         }
         feedFolderRepository.save(new FeedFolder(feed,folder));
     }
-
-    public Page<FeedResponseDto> getFeedInFolder(Long folderId, int page, int size, String sortBy, boolean isAsc, User user){
-
-        // 페이징 정렬
-        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Sort sort = Sort.by(direction, sortBy);
-        Pageable pageable = PageRequest.of(page,size,sort);
-
-        Page<Feed> feedList = feedRepository.findAllByUserAndFeedFolderList_FolderId(user, folderId, pageable);
-        Page<FeedResponseDto> responseDtoList = feedList.map(FeedResponseDto::new);
-
-        return responseDtoList;
-    }
-
 }
