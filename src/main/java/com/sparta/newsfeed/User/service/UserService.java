@@ -7,6 +7,7 @@ import com.sparta.newsfeed.User.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -50,7 +51,7 @@ public class UserService {
 
         return new SignupResponseDto(user,"회원가입되었습니다.");
     }
-
+    @Transactional
     public IntroduceResponseDto editIntroduce(Long id,IntroduceRequestDto requestDto) {
 
         User user = userRepository.findById(id).orElseThrow(()->
@@ -67,7 +68,7 @@ public class UserService {
 
         return new IntroduceResponseDto(user);
     }
-
+    @Transactional
     public SignupResponseDto editPassword(User user, EditPasswordRequestDto requestDto) {
         User userItem= userRepository.findById(user.getId()).orElseThrow(()->new IllegalArgumentException("사용자가 존재하지 않습니다."));
 

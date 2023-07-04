@@ -55,7 +55,7 @@ public class User {
 
     public void update(IntroduceRequestDto requestDto) {
         this.nickname= requestDto.getNickname();
-        this.my_content= requestDto.getNickname();
+        this.my_content= requestDto.getMy_content();
     }
 
     public void updatePassword(EditPasswordRequestDto requestDto) {
