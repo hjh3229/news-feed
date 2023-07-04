@@ -24,7 +24,7 @@ public class FeedService {
 
     @Transactional(readOnly = true)
     public List<FeedResponseDto> getFeeds() {
-        return feedRepository.findAllByOrderByModifiedAtDesc().stream().map(FeedResponseDto::new).toList();
+        return feedRepository.findAll().stream().map(FeedResponseDto::new).toList();
     }
 
     @Transactional(readOnly = true)
@@ -32,10 +32,12 @@ public class FeedService {
         return feedRepository.findAllByUserId(userId).stream().map(FeedResponseDto::new).toList();
     }
 
-    @Transactional(readOnly = true)
-    public List<FeedResponseDto> getFeedsByFolder(Long folderId) {
-        return feedRepository.findAllByFolderId(folderId).stream().map(FeedResponseDto::new).toList();
-    }
+
+
+//    @Transactional(readOnly = true)
+//    public List<FeedResponseDto> getFeedsByFolder(Long folderId) {
+//        return feedRepository.findAllByFolderId(folderId).stream().map(FeedResponseDto::new).toList();
+//    }
 
     @Transactional
     public FeedResponseDto updateFeed(FeedRequestDto requestDto, Long id, User user) {

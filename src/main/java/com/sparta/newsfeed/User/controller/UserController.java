@@ -32,10 +32,7 @@ public class UserController {
     @GetMapping("/user-info")
     @ResponseBody
     public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        String username = userDetails.getUser().getUsername();
-
-
-        return new UserInfoDto(username);
+        return userService.getUserInfo(userDetails);
     }
 
     @PutMapping("/introduce/{user_id}")

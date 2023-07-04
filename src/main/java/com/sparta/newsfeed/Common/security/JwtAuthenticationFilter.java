@@ -32,7 +32,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             log.info("로그인 시도");
             LoginRequestDto requestDto = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDto.class);
-
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(requestDto.getUsername(), requestDto.getPassword(), null);
             AuthenticationManager authenticationManager = getAuthenticationManager();
             Authentication authentication = authenticationManager.authenticate(token);

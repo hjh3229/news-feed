@@ -27,6 +27,6 @@ function getToken() {
     if(auth === undefined) {
         return '';
     }
-
     return auth;
 }
+

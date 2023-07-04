@@ -13,9 +13,9 @@
 </head>
 <body>
 <header style="margin: 20px 0 0 50px">
-<a href="/" class="logo" style="font-weight: 900; color: inherit">
-    쵝오조
-</a>
+    <a href="/" class="logo" style="font-weight: 900; color: inherit">
+        쵝오조
+    </a>
 </header>
 <br>
 <div class="header" style="float:left">
@@ -31,31 +31,33 @@
 </div>
 <div class="header" style="float:right">
     <div class="container-fluid row justify-content-center align-content-center">
-    <button type="button" class="btn btn-info" onclick="location.href='/newsfeed/user/loin-page'">로그인</button>
+        <button type="button" class="btn btn-info" onclick="location.href='/newsfeed/user/loin-page'">로그인</button>
     </div>
     <br>
     <div class="container-fluid row justify-content-center align-content-center">
-    <button type="button" class="btn btn-secondary" onclick="location.href='/newsfeed/user/loin-page'">로그아웃</button>
+        <button type="button" class="btn btn-secondary" onclick="location.href='/newsfeed/user/loin-page'">로그아웃</button>
     </div>
 </div>
 
+
+
 <section class="d-flex vh-100">
     <div class="container-fluid row justify-content-center align-content-center">
-        <div class="row-6" th:each = "item : ${feeds}">
-<!--        <div class="card-body p-5 text-center">-->
-<!--            <div class="card-header" th:text="${item.id}">&ndash;&gt;-->
-<!--            </div>-->
+        <div class="row-6" th:each = "item : ${feed}">
+<!--        <div class="card">-->
+<!--            <div class="card-header"  th:text="${item.id}">&ndash;&gt;-->
+<!--        </div>-->
             <div class="card-body p-5 text-center">
-                <a th:href ="@{/newsfeed/feeds/{user_id}(user_id=${item.userid})}"
-                   class="logo" th:text="${item.username}"></a>
-                <h5></h5>
                 <h5 class="card-title" th:text="${item.title}"></h5>
                 <h5 class="card-title" th:text="${item.url}"></h5>
                 <h5 class="card-title" th:text="${item.contents}"></h5>
+                <button type="button" class="btn btn-primary btn-sm">수정</button>
+                <button type="button" class="btn btn-secondary btn-sm">삭제</button>
             </div>
         </div>
         <br>
     </div>
 </section>
+
 
 </body>

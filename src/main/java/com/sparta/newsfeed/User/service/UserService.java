@@ -1,9 +1,7 @@
 package com.sparta.newsfeed.User.service;
 
-import com.sparta.newsfeed.User.dto.IntroduceRequestDto;
-import com.sparta.newsfeed.User.dto.IntroduceResponseDto;
-import com.sparta.newsfeed.User.dto.SignupRequestDto;
-import com.sparta.newsfeed.User.dto.SignupResponseDto;
+import com.sparta.newsfeed.Common.security.UserDetailsImpl;
+import com.sparta.newsfeed.User.dto.*;
 import com.sparta.newsfeed.User.entity.User;
 import com.sparta.newsfeed.User.entity.UserRoleEnum;
 import com.sparta.newsfeed.User.repository.UserRepository;
@@ -67,6 +65,11 @@ public class UserService {
                 new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
 
         return new IntroduceResponseDto(user);
+    }
+
+    public UserInfoDto getUserInfo(UserDetailsImpl userDetails) {
+        UserInfoDto userInfo = new UserInfoDto(userDetails);
+        return userInfo;
     }
 
 //    public SignupResponseDto editPassword(SignupRequestDto requestDto) {

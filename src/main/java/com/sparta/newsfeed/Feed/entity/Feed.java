@@ -34,8 +34,8 @@ public class Feed {
     @JoinColumn(name = "user_id", nullable = false)
     private  User user;
 
-    @OneToMany(mappedBy = "feed")
-    private List<FeedFolder> feedFolderList = new ArrayList<>();
+//    @OneToMany(mappedBy = "feed")
+//    private List<FeedFolder> feedFolderList = new ArrayList<>();
 
     public Feed(FeedRequestDto feedRequestDto, User user) { // 피드 수정과 같은 요구사항을 받으므로 update도 생성자 사용
         if (feedRequestDto.getTitle() == null) {

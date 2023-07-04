@@ -34,6 +34,15 @@ public class UserDetailsImpl implements UserDetails {
         return user.getUsername();
     }
 
+    public String getNickname() {
+        return user.getNickname();
+    }
+    public String getMy_content() {
+        return user.getMy_content();
+    }
+
+
+
     //권한 ???????????????????
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
