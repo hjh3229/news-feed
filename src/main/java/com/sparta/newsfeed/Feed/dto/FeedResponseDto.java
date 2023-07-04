@@ -1,5 +1,7 @@
 package com.sparta.newsfeed.Feed.dto;
 
+import com.sparta.newsfeed.Comment.dto.CommentResponseDto;
+import com.sparta.newsfeed.Comment.entity.Comment;
 import com.sparta.newsfeed.Feed.entity.Feed;
 import com.sparta.newsfeed.FeedFolder.entity.FeedFolder;
 import com.sparta.newsfeed.Folder.dto.FolderResponseDto;
@@ -16,6 +18,7 @@ public class FeedResponseDto {
     private String title;
     private String url;
     private String contents;
+    private List<CommentResponseDto> commentList;
 
     private List<FolderResponseDto> feedFolderList = new ArrayList<>();
 
@@ -26,6 +29,11 @@ public class FeedResponseDto {
         this.contents = feed.getContents();
         for (FeedFolder feedFolder : feed.getFeedFolderList()) {
             feedFolderList.add(new FolderResponseDto(feedFolder.getFolder()));
+        }
+        this.commentList = new ArrayList<>();
+        for (Comment comment : feed.getCommentList()) {
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+            this.commentList.add(commentResponseDto);
         }
     }
 }
