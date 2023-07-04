@@ -22,7 +22,7 @@ public class FeedController {
     @PostMapping("/feed/{user_id}")
     public String create(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody FeedRequestDto requestDto){
         feedService.create(userDetails.getUser(),requestDto);
-        return "redirect:/";
+        return "feedlist";
     }
 
     @GetMapping("/feeds/{user_id}")
@@ -38,12 +38,12 @@ public class FeedController {
     @PutMapping("/feed/{id}") // Restful하다고 생각돼서 수정
     public String updateFeed(@RequestBody FeedRequestDto requestDto, @PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         feedService.updateFeed(requestDto, id, userDetails.getUser());
-        return "redirect:/";
+        return "feedlist";
     }
 
     @DeleteMapping("/feed/{id}")
     public String deleteFeed(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         feedService.deleteFeed(id, userDetails.getUser());
-        return "redirect:/";
+        return "feedlist";
     }
 }
