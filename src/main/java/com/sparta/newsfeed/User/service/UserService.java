@@ -85,8 +85,4 @@ public class UserService {
         return new SignupResponseDto(userItem,"비밀번호가 변경되었습니다.");
     }
 
-      public UserInfoDto getUserInfo(UserDetailsImpl userDetails) {
-        UserInfoDto userInfo = new UserInfoDto(userDetails);
-        return userInfo;
-    }
 }
