@@ -47,6 +47,13 @@ public class FeedService {
         List<FeedResponseDto> feedList = feedRepository.findAllByFeedFolderList_FolderId(folderId);
         return feedList;
     }
+  
+      public FeedResponseDto getFeed(Long feed_id) {
+        Feed feed = feedRepository.findById(feed_id).orElseThrow(
+                ()->new NullPointerException("not found Feed")
+        );
+        return new FeedResponseDto(feed);
+    }
 
     @Transactional
     public void updateFeed(FeedRequestDto requestDto, Long id, User user) {
