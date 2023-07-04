@@ -28,15 +28,20 @@ public class UserController {
     @GetMapping("/user-info")
     @ResponseBody
     public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return userService.getUserInfo(userDetails);
+        String username = userDetails.getUser().getUsername();
+        String nickname = userDetails.getUser().getNickname();
+        String myContent = userDetails.getUser().getMy_content();
+        return new UserInfoDto(username,nickname,myContent);
     }
 
     @PutMapping("/introduce")
+    @ResponseBody
     public IntroduceResponseDto editIntroduce(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody IntroduceRequestDto requestDto){
         return userService.editIntroduce(userDetails.getUser().getId(), requestDto);
     }
 
     @GetMapping("/user/introduce")
+    @ResponseBody
     public IntroduceResponseDto selecteIntroduce(@AuthenticationPrincipal UserDetailsImpl userDetails){
         return userService.selecteIntroduce(userDetails.getUser().getId());
     }

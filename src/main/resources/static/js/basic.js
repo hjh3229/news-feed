@@ -17,7 +17,11 @@ $(document).ready(function () {
     })
         .done(function (res) {
             const username = res.username;
+            const nickname = res.nickname;
+            const myContent = res.myContent;
             $('#username').text(username);
+            $('#nickname').text(nickname);
+            $('#myContent').text(myContent);
         })
 
     // 삭제 기능
