@@ -21,8 +21,8 @@ public class FolderController {
     // 폴더 추가
     @PostMapping("/folder")
     public void addFolder(@RequestBody FolderRequestDto folderRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        List<String> folderNames = folderRequestDto.getFolderNames();
-        folderService.addFolders(folderNames,userDetails.getUser());
+        String folderName = folderRequestDto.getFolderName();
+        folderService.addFolders(folderName,userDetails.getUser());
     }
 
     // 폴더 조회

@@ -17,20 +17,16 @@ public class FolderService {
     private final FolderRepository folderRepository;
     
     // 폴더 추가
-    public void addFolders(List<String> folderNames, User user) {
+    public void addFolders(String folderName, User user) { // 폴더이름 1개와 유저 정보
 
-        List<Folder> existFolderList = folderRepository.findAllByUserAndTitleIn(user,folderNames);
-        List<Folder> folderList = new ArrayList<>();
+        List<Folder> existFolderList = folderRepository.findAllByUserAndTitleIn(user,folderName); 
 
-        for (String folderName : folderNames) {
-            if(!isExistFolderName(folderName,existFolderList)){
-                Folder folder = new Folder(folderName, user);
-                folderList.add(folder);
-            } else {
-                throw new IllegalArgumentException("폴더명이 중복되었습니다.");
-            }
+        if(!isExistFolderName(folderName,existFolderList)){
+            Folder folder = new Folder(folderName, user);
+            folderRepository.save(folder);
+        } else {
+            throw new IllegalArgumentException("폴더명이 중복되었습니다.");
         }
-        folderRepository.saveAll(folderList);
     }
 
     // 폴더 조회
