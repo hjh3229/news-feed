@@ -1,15 +1,13 @@
 package com.sparta.newsfeed.User.service;
 
-import com.sparta.newsfeed.User.dto.IntroduceRequestDto;
-import com.sparta.newsfeed.User.dto.IntroduceResponseDto;
-import com.sparta.newsfeed.User.dto.SignupRequestDto;
-import com.sparta.newsfeed.User.dto.SignupResponseDto;
+import com.sparta.newsfeed.User.dto.*;
 import com.sparta.newsfeed.User.entity.User;
 import com.sparta.newsfeed.User.entity.UserRoleEnum;
 import com.sparta.newsfeed.User.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -53,7 +51,7 @@ public class UserService {
 
         return new SignupResponseDto(user,"회원가입되었습니다.");
     }
-
+    @Transactional
     public IntroduceResponseDto editIntroduce(Long id,IntroduceRequestDto requestDto) {
 
         User user = userRepository.findById(id).orElseThrow(()->
@@ -70,15 +68,16 @@ public class UserService {
 
         return new IntroduceResponseDto(user);
     }
+    @Transactional
+    public SignupResponseDto editPassword(User user, EditPasswordRequestDto requestDto) {
+        User userItem= userRepository.findById(user.getId()).orElseThrow(()-> new IllegalArgumentException("사용자가 존재하지 않습니다."));
 
-    public SignupResponseDto editPassword(User user,SignupRequestDto requestDto) {
-        User userItem= userRepository.findById(user.getId()).orElseThrow(()->new IllegalArgumentException("사용자가 존재하지 않습니다."));
-
-        if(!userItem.getPassword().equals(requestDto.getPassword())){
+        if(!(userItem.getPassword().equals(requestDto.getPassword()))){
            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
         }
-
-        userItem.updatePassword(requestDto);
+        // password Encode
+        String password = passwordEncoder.encode(requestDto.getNew_password());
+        userItem.updatePassword(password);
 
 
         return new SignupResponseDto(userItem,"비밀번호가 변경되었습니다.");
