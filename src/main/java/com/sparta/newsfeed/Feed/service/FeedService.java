@@ -43,8 +43,8 @@ public class FeedService {
     }
 
     @Transactional(readOnly = true)
-    public List<FeedResponseDto> getFeedsByFolder(Long folderId, User user) {
-        List<FeedResponseDto> feedList = feedRepository.findAllByUserAndFeedFolderList_FolderId(user, folderId);
+    public List<FeedResponseDto> getFeedsByFolder(Long folderId) {
+        List<FeedResponseDto> feedList = feedRepository.findAllByFeedFolderList_FolderId(folderId);
         return feedList;
     }
 
