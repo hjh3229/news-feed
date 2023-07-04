@@ -58,7 +58,8 @@ public class User {
         this.my_content= requestDto.getMy_content();
     }
 
-    public void updatePassword(EditPasswordRequestDto requestDto) {
-        this.password=requestDto.getPassword();
+    public void updatePassword(String password) {
+        this.password=password;
+
     }
 }

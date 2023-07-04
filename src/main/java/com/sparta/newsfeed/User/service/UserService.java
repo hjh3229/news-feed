@@ -70,13 +70,14 @@ public class UserService {
     }
     @Transactional
     public SignupResponseDto editPassword(User user, EditPasswordRequestDto requestDto) {
-        User userItem= userRepository.findById(user.getId()).orElseThrow(()->new IllegalArgumentException("사용자가 존재하지 않습니다."));
+        User userItem= userRepository.findById(user.getId()).orElseThrow(()-> new IllegalArgumentException("사용자가 존재하지 않습니다."));
 
-        if(!userItem.getPassword().equals(requestDto.getPassword())){
+        if(!(userItem.getPassword().equals(requestDto.getPassword()))){
            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
         }
-
-        userItem.updatePassword(requestDto);
+        // password Encode
+        String password = passwordEncoder.encode(requestDto.getNew_password());
+        userItem.updatePassword(password);
 
 
         return new SignupResponseDto(userItem,"비밀번호가 변경되었습니다.");
