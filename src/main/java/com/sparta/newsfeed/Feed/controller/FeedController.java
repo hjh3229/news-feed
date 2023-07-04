@@ -31,7 +31,7 @@ public class FeedController {
 //        return feedService.getFeedsByUser(user_id);
 //    }
 
-    @GetMapping("/feeds/{folder_id}")
+    @GetMapping("/feeds/folder={folder_id}")
     public List<FeedResponseDto> getFeedsByFolder(@PathVariable Long folder_id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return feedService.getFeedsByFolder(folder_id, userDetails.getUser());
     }

@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +34,17 @@ public class Feed {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private  User user;
+    private User user;
 
     @OneToMany(mappedBy = "feed")
     private List<FeedFolder> feedFolderList = new ArrayList<>();
 
     @OneToMany(mappedBy = "feed")
     private List<Comment> commentList = new ArrayList<>();
+
+    @ColumnDefault("0")
+    @Column(name = "view_count",nullable = false)
+    private Integer viewCount;
 
     public Feed(FeedRequestDto requestDto, User user) { // 피드 수정과 같은 요구사항을 받으므로 update도 생성자 사용
         if (requestDto.getTitle() == null) {
