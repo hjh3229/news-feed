@@ -1,5 +1,6 @@
 package com.sparta.newsfeed.User.service;
 
+
 import com.sparta.newsfeed.Common.security.UserDetailsImpl;
 import com.sparta.newsfeed.User.dto.*;
 import com.sparta.newsfeed.User.entity.User;
@@ -8,6 +9,7 @@ import com.sparta.newsfeed.User.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -18,7 +20,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void createUser(SignupRequestDto requestDto) {
+    public SignupResponseDto createUser(SignupRequestDto requestDto) {
 
         // 회원 중복 확인
         Optional<User> checkUsername = userRepository.findByUsername(requestDto.getUsername());
@@ -48,14 +50,16 @@ public class UserService {
 
         User user = new User(requestDto.getUsername(), password, requestDto.getEmail(), role);
         userRepository.save(user);
-    }
 
+        return new SignupResponseDto(user,"회원가입되었습니다.");
+    }
+    @Transactional
     public IntroduceResponseDto editIntroduce(Long id,IntroduceRequestDto requestDto) {
 
         User user = userRepository.findById(id).orElseThrow(()->
                 new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
 
-        user.update(requestDto.getNickname(), requestDto.getMy_content());
+        user.update(requestDto);
 
         return new IntroduceResponseDto(user);
     }
@@ -66,14 +70,23 @@ public class UserService {
 
         return new IntroduceResponseDto(user);
     }
+  
+    @Transactional
+    public SignupResponseDto editPassword(User user, EditPasswordRequestDto requestDto) {
+        User userItem= userRepository.findById(user.getId()).orElseThrow(()-> new IllegalArgumentException("사용자가 존재하지 않습니다."));
+        if(!(userItem.getPassword().equals(requestDto.getPassword()))){
+           throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
+        }
+        // password Encode
+        String password = passwordEncoder.encode(requestDto.getNew_password());
+        userItem.updatePassword(password);
 
-    public UserInfoDto getUserInfo(UserDetailsImpl userDetails) {
+
+        return new SignupResponseDto(userItem,"비밀번호가 변경되었습니다.");
+    }
+
+      public UserInfoDto getUserInfo(UserDetailsImpl userDetails) {
         UserInfoDto userInfo = new UserInfoDto(userDetails);
         return userInfo;
     }
-
-//    public SignupResponseDto editPassword(SignupRequestDto requestDto) {
-//    }
-
-
 }

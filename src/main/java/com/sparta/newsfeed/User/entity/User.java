@@ -1,6 +1,9 @@
 package com.sparta.newsfeed.User.entity;
 
 import com.sparta.newsfeed.Feed.entity.Feed;
+import com.sparta.newsfeed.User.dto.EditPasswordRequestDto;
+import com.sparta.newsfeed.User.dto.IntroduceRequestDto;
+import com.sparta.newsfeed.User.dto.SignupRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,8 +53,13 @@ public class User {
         this.role = role;
     }
 
-    public void update(String nickname, String myComment) {
-        this.nickname=nickname;
-        this.my_content=myComment;
+    public void update(IntroduceRequestDto requestDto) {
+        this.nickname= requestDto.getNickname();
+        this.my_content= requestDto.getMy_content();
+    }
+
+    public void updatePassword(String password) {
+        this.password=password;
+
     }
 }

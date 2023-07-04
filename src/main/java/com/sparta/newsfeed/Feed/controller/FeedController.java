@@ -22,8 +22,8 @@ public class FeedController {
     private final FeedService feedService;
 
     @PostMapping("/feed")
-    public FeedResponseDto create(@AuthenticationPrincipal UserDetailsImpl userdetail, @RequestBody FeedRequestDto requestDto){
-        return feedService.create(userdetail.getUser(),requestDto);
+    public void create(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody FeedRequestDto requestDto){
+        feedService.create(userDetails.getUser(),requestDto);
     }
 
 //    @GetMapping("/feeds/{user_id}")
@@ -31,19 +31,20 @@ public class FeedController {
 //        return feedService.getFeedsByUser(user_id);
 //    }
 
-//    @GetMapping("/feeds/{folder_id}")
-//    public List<FeedResponseDto> getFeedsByFolder(@PathVariable Long folder_id) {
-//        return feedService.getFeedsByFolder(folder_id);
-//    }
-
+    @GetMapping("/feeds/{folder_id}")
+    public List<FeedResponseDto> getFeedsByFolder(@PathVariable Long folder_id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return feedService.getFeedsByFolder(folder_id, userDetails.getUser());
+    }
 
     @PutMapping("/feed/{id}")
-    public FeedResponseDto updateFeed(@RequestBody FeedRequestDto requestDto, @PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return feedService.updateFeed(requestDto, id, userDetails.getUser());
+    public String updateFeed(@RequestBody FeedRequestDto requestDto, @PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        feedService.updateFeed(requestDto, id, userDetails.getUser());
+        return "feedList";
     }
 
     @DeleteMapping("/feed/{id}")
-    public void deleteFeed(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public String deleteFeed(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         feedService.deleteFeed(id, userDetails.getUser());
+        return "feedList";
     }
 }
