@@ -33,7 +33,7 @@ public class HomeController {
         return "feedList";
     }
 
-    @GetMapping("newsfeed/newFeed")
+    @GetMapping("newsfeed/feed")
     public String getFeed(@RequestParam(required = false) Long feed_id, Model model) {
         if(feed_id==null) {
             model.addAttribute("feed", new FeedResponseDto());
@@ -43,4 +43,5 @@ public class HomeController {
         }
         return "feed";
     }
+
 }
