@@ -10,4 +10,5 @@ public class UserInfoDto {
     String username;
     String nickname;
     String myContent;
+    Long user_id;
 }

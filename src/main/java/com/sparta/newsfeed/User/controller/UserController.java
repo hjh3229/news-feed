@@ -34,7 +34,8 @@ public class UserController {
         String username = userDetails.getUser().getUsername();
         String nickname = userDetails.getUser().getNickname();
         String myContent = userDetails.getUser().getMy_content();
-        return new UserInfoDto(username,nickname,myContent);
+        Long user_id = userDetails.getUser().getId();
+        return new UserInfoDto(username,nickname,myContent,user_id);
     }
 
     @PutMapping("/introduce")
@@ -43,15 +44,18 @@ public class UserController {
         return userService.editIntroduce(userDetails.getUser().getId(), requestDto);
     }
 
-    @GetMapping("/user/introduce")
+    @PostMapping("/password")
     @ResponseBody
-    public IntroduceResponseDto selecteIntroduce(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        return userService.selecteIntroduce(userDetails.getUser().getId());
+    public CheckPasswordResponseDto checkPassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody CheckPasswordRequestDto requestDto){
+        CheckPasswordResponseDto responseDto = new CheckPasswordResponseDto(userService.checkPassword(userDetails, requestDto));
+        return responseDto;
     }
 
     @PutMapping("/password")
+    @ResponseBody
     public SignupResponseDto editPassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody EditPasswordRequestDto requestDto){
         return  userService.editPassword(userDetails.getUser(),requestDto);
     }
+
 
 }

@@ -23,19 +23,31 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-lg-8">
+            <div id="passwordForm">
+                <label>비밀번호 변경</label><br>
+                <input type="password" id="checkPassword" placeholder="현재 비밀번호">
+                <button class="btn btn-dark" id="checkPassword-btn">비밀번호 확인</button>
+            </div>
+            <div id="newPasswordForm" style="display: none">
+                <label>비밀번호 변경</label><br>
+                <input type="password" id="newPassword" placeholder="새 비밀번호">
+                <button type="button" class="btn btn-dark" id="newPassword-btn">비밀번호 변경</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
             <article>
-                <input type="hidden" id="feed-id" th:value="${feed.id}">
                 <header class="mb-4">
-                    <input type="text" class="form-control" placeholder="제목" id="title" th:value="${feed.title}">
+                    <input type="text" class="form-control" placeholder="제목" id="nickname" th:value="${userintro.nickname}">
                 </header>
                 <section class="mb-5">
-                    <textarea class="form-control h-25" rows="1" placeholder="url" id="url" th:text="${feed.url}"></textarea>
+                    <textarea class="form-control h-25" rows="10" placeholder="내용" id="mycontent" th:text="${userintro.my_content}"></textarea>
                 </section>
-                <section class="mb-5">
-                    <textarea class="form-control h-25" rows="10" placeholder="내용" id="content" th:text="${feed.contents}"></textarea>
-                </section>
-                <button th:if="${feed.id} != null" type="button" id="modify-btn" class="btn btn-dark">수정</button>
-                <button th:if="${feed.id} == null" type="button" id="create-btn" class="btn btn-dark">등록</button>
+                <button type="button" id="modifyIntro-btn" class="btn btn-dark">수정</button>
             </article>
         </div>
     </div>
