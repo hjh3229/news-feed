@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-
-// 나중에 다시 222
 public interface FeedFolderRepository extends JpaRepository<FeedFolder, Long>{
 
     Optional<FeedFolder> findByFeedAndFolder(Feed feed, Folder folder);

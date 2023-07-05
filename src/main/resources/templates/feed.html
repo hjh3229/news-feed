@@ -20,21 +20,24 @@
 </header><br>
 <div id="profile"></div>
 
-<section class="d-flex vh-100">
-    <div class="container-fluid row justify-content-center align-content-center">
-        <div class="row-6" th:each = "item : ${feed}">
-            <div class="card-body p-5 text-center">
-                <input type="hidden" id="item-id" th:value="${item.id}">
-                <h5 class="card-title" th:text="${item.title}"></h5>
-                <h6 class="card-title" th:text="${item.url}"></h6>
-                <h6 class="card-title" th:text="${item.contents}"></h6>
-                <button type="button" style="font-size: 10px" id="modify-btn"
-                        th:onclick="|location.href='@{/newsfeed/feed?feed_id={feed_id}(feed_id=${item.id})}'|"
-                        class="btn btn-light">수정</button>
-                <button type="button" style="font-size: 10px" id="delete-btn"
-                        class="btn btn-secondary btn-sm">삭제</button>
-            </div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <article>
+                <input type="hidden" id="feed-id" th:value="${feed.id}">
+                <header class="mb-4">
+                    <input type="text" class="form-control" placeholder="제목" id="title" th:value="${feed.title}">
+                </header>
+                <section class="mb-5">
+                    <textarea class="form-control h-25" rows="1" placeholder="url" id="url" th:text="${feed.url}"></textarea>
+                </section>
+                <section class="mb-5">
+                    <textarea class="form-control h-25" rows="10" placeholder="내용" id="content" th:text="${feed.contents}"></textarea>
+                </section>
+                <button th:if="${feed.id} != null" type="button" id="modify-btn" class="btn btn-dark">수정</button>
+                <button th:if="${feed.id} == null" type="button" id="create-btn" class="btn btn-dark">등록</button>
+            </article>
         </div>
     </div>
-</section>
+</div>
 </body>

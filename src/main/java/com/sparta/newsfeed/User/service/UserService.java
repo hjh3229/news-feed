@@ -70,13 +70,20 @@ public class UserService {
 
         return new IntroduceResponseDto(user);
     }
-  
+
+    @Transactional
+    public boolean checkPassword(UserDetailsImpl userDetails, CheckPasswordRequestDto requestDto) {
+        User user = userDetails.getUser();
+        System.out.println(requestDto.getPassword());
+        if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
+        }
+        return true;
+    }
     @Transactional
     public SignupResponseDto editPassword(User user, EditPasswordRequestDto requestDto) {
         User userItem= userRepository.findById(user.getId()).orElseThrow(()-> new IllegalArgumentException("사용자가 존재하지 않습니다."));
-        if(!(userItem.getPassword().equals(requestDto.getPassword()))){
-           throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
-        }
+
         // password Encode
         String password = passwordEncoder.encode(requestDto.getNew_password());
         userItem.updatePassword(password);
@@ -85,8 +92,4 @@ public class UserService {
         return new SignupResponseDto(userItem,"비밀번호가 변경되었습니다.");
     }
 
-      public UserInfoDto getUserInfo(UserDetailsImpl userDetails) {
-        UserInfoDto userInfo = new UserInfoDto(userDetails);
-        return userInfo;
-    }
 }

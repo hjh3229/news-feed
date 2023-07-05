@@ -1,6 +1,4 @@
-const host = 'http://' + window.location.host;
-let targetId;
-let folderTargetId;
+let host = "http://localhost:8080"
 $(document).ready(function () {
     const auth = getToken();
 
@@ -8,17 +6,147 @@ $(document).ready(function () {
         $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
             jqXHR.setRequestHeader('Authorization', auth);
         });
+        showProfile();
+        $("#login-button").hide();
     }
 
-    $.ajax({
-        type: 'GET',
-        url: `/newsfeed/user-info`,
-        contentType: 'application/json',
-    })
-        .done(function (res) {
-            const username = res.username;
-            $('#username').text(username);
-        })
+
+    // 생성 기능
+    const createButton = document.getElementById('create-btn');
+
+    if (createButton) {
+        createButton.addEventListener('click', event => {
+            fetch('/newsfeed/feed', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    title: document.getElementById('title').value,
+                    url: document.getElementById('url').value,
+                    contents: document.getElementById('content').value
+                })
+            })
+                .then(() => {
+                    alert('등록 완료되었습니다.');
+                    location.replace('/');
+                });
+        });
+    }
+
+
+    // 수정 기능
+    const modifyButton = document.getElementById('modify-btn');
+
+    if (modifyButton) {
+        modifyButton.addEventListener('click', event => {
+            let params = new URLSearchParams(location.search);
+            let id = params.get('feed_id');
+
+            fetch(`/newsfeed/feed/${id}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    title: document.getElementById('title').value,
+                    url: document.getElementById('url').value,
+                    contents: document.getElementById('content').value
+                })
+            })
+                .then(() => {
+                    alert('수정이 완료되었습니다.');
+
+                    location.replace(`/`);
+                });
+        });
+    }
+
+    // 삭제 기능
+    const deleteButton = document.getElementById('delete-btn');
+
+    if (deleteButton) {
+        deleteButton.addEventListener('click', event => {
+            let id = document.getElementById('item-id').value;
+            fetch(`/newsfeed/feed/${id}`, {
+                method: 'DELETE'
+            })
+                .then(() => {
+                    alert('삭제가 완료되었습니다.');
+                    location.replace('/');
+                });
+        });
+    }
+    // 수정 기능
+    const modifyIntroButton = document.getElementById('modifyIntro-btn');
+
+    if (modifyIntroButton) {
+        modifyIntroButton.addEventListener('click', event => {
+
+            fetch(`/newsfeed/introduce`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nickname: document.getElementById('nickname').value,
+                    my_content: document.getElementById('mycontent').value
+                })
+            })
+                .then(() => {
+                    alert('수정이 완료되었습니다.');
+
+                    location.replace(`/`);
+                });
+        });
+    }
+
+
+    //비밀번호 확인
+    const checkPasswordButton = document.getElementById('checkPassword-btn');
+
+    if (checkPasswordButton) {
+        checkPasswordButton.addEventListener('click', event => {
+
+            fetch(`/newsfeed/password`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    new_password: document.getElementById('checkPassword').value,
+                })
+            })
+                .then(() => {
+                    $("#passwordForm").hide();
+                    $("#newPasswordForm").show();
+                });
+        });
+    }
+
+    //비밀번호 변경
+    const newPasswordButton = document.getElementById('newPassword-btn');
+
+    if (newPasswordButton) {
+        newPasswordButton.addEventListener('click', event => {
+
+            fetch(`/newsfeed/password`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    new_password: document.getElementById('newPassword').value,
+                })
+            })
+                .then(() => {
+                    alert('수정이 완료되었습니다.');
+                    $("#newPasswordForm").hide();
+                });
+        });
+    }
+
+
 })
 
 function getToken() {
@@ -29,4 +157,28 @@ function getToken() {
     }
     return auth;
 }
-
+function showProfile() {
+    $.ajax({
+        type: 'GET',
+        url: `/newsfeed/user-info`,
+        success: function (response) {
+            $('#profile').empty();
+            $('#profile').append(`
+                <div class="header" style="float:left">
+                    <div class="card-body p-5 text-center">
+                        <a href ="/newsfeed/feeds/user=${response.user_id}"
+                        class="logo" style="font-weight: 200; color: inherit">
+                        <p>${response.nickname}</p>
+                        <p>${response.myContent}</p></a><br>
+                        <button type="button" style="width: 120px;" onclick="location.href='/newsfeed/feed'" class="btn btn-dark">Feed 추가</button><br><br>
+                        <button type="button" style="width: 120px;" class="btn btn-light" onclick="location.href='/newsfeed/user/introduce'">프로필 수정</button><br><br>
+                        <button type="button"style="width: 120px;"  class="btn btn-secondary" onclick="location.href='/newsfeed/user/loin-page'">로그아웃</button>
+                    </div>
+                </div>
+            `)
+        },
+        error: function (error) {
+            console.log('Error:', error);
+        }
+    })
+}
