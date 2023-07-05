@@ -1,32 +1,20 @@
 package com.sparta.newsfeed.Common.email;
 
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
-import org.springframework.stereotype.Service;
+import java.io.UnsupportedEncodingException;
 
-@Service
-@AllArgsConstructor
-public class MailService {
+public interface MailService {
 
-    private JavaMailSender mailSender;
-    private static final String FROM_ADDRESS = "yesrin232@naver.com";
+    // 메일 내용 작성
+    MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException;
 
-    public void mailSend(MailDto mailDto) {
-        try {
-            MailHandler mailHandler = new MailHandler(mailSender);
 
-            // 받는 사람
-            mailHandler.setTo(mailDto.getAddress());
-            // 보내는 사람
-            mailHandler.setFrom(MailService.FROM_ADDRESS);
-            // 제목
-            mailHandler.setSubject(mailDto.getTitle());
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
+    // 랜덤 인증 코드 전송
+    String createKey();
+
+    // 메일 발송
+    String sendSimpleMessage(String to) throws Exception;
 }
+
