@@ -54,13 +54,4 @@ public class UserController {
         return  userService.editPassword(userDetails.getUser(),requestDto);
     }
 
-
-    // 회원이 저장한 폴더 조회
-    @GetMapping("/user-folder/user={user_id}")
-    public String getUserInfo(@PathVariable Long user_id, Model model){
-        List<FolderResponseDto> folder = folderService.getFolders(user_id);
-        model.addAttribute("folder",folder);
-        return null;  // 맞는 HTML 연결
-    }
-
 }

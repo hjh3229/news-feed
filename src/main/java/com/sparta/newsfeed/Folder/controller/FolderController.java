@@ -23,14 +23,13 @@ public class FolderController {
     private final FolderService folderService;
 
     // 폴더 추가
-    @PostMapping("/folder")
+    @PostMapping("/folders")
     public void addFolder(@RequestBody FolderRequestDto folderRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        String folderName = folderRequestDto.getFolderName();
-        folderService.addFolders(folderName,userDetails.getUser());
+        folderService.addFolders(folderRequestDto.getFolderName(),userDetails.getUser());
     }
 
     // 폴더 조회(수정)
-    @GetMapping("/folder/user={user_id}")
+    @GetMapping("/folders/user={user_id}")
     public String getFolders(@PathVariable Long user_id, Model model){
         List<FolderResponseDto> folder = folderService.getFolders(user_id);
         model.addAttribute("folder",folder);
