@@ -26,9 +26,10 @@ public class HomeController {
         model.addAttribute("feeds",feeds);
         return "index";
     }
-    @GetMapping("newsfeed/feeds/{user_id}")
-    public String getFeedListsByUser(@PathVariable Long user_id, Model model) {
-        List<FeedResponseDto> feed = feedService.getFeedListsByUser(user_id);
+
+    @GetMapping("newsfeed/feeds/user={user_id}")
+    public String getFeedsByUser(@PathVariable Long user_id, Model model) {
+        List<FeedResponseDto> feed = feedService.getFeedsByUser(user_id);
         model.addAttribute("feed", feed);
         return "feedList";
     }

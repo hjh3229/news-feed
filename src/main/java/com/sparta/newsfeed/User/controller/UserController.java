@@ -2,6 +2,7 @@ package com.sparta.newsfeed.User.controller;
 
 
 import com.sparta.newsfeed.Common.security.UserDetailsImpl;
+import com.sparta.newsfeed.Folder.dto.FolderResponseDto;
 import com.sparta.newsfeed.User.service.UserService;
 import org.springframework.stereotype.Controller;
 import com.sparta.newsfeed.User.dto.*;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,6 +37,7 @@ public class UserController {
         Long user_id = userDetails.getUser().getId();
         return new UserInfoDto(username,nickname,myContent,user_id);
     }
+
     @PutMapping("/introduce")
     @ResponseBody
     public IntroduceResponseDto editIntroduce(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody IntroduceRequestDto requestDto){
