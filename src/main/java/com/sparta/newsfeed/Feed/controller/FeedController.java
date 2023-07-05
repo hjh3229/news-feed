@@ -4,6 +4,7 @@ import com.sparta.newsfeed.Common.security.UserDetailsImpl;
 import com.sparta.newsfeed.Feed.dto.FeedRequestDto;
 import com.sparta.newsfeed.Feed.dto.FeedResponseDto;
 import com.sparta.newsfeed.Feed.service.FeedService;
+import com.sparta.newsfeed.Folder.dto.FolderRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -41,6 +42,12 @@ public class FeedController {
         feedService.deleteFeed(id, userDetails.getUser());
         return "feedList";
     }
+  
+    // 폴더 추가
+    @PostMapping("{feedId}/folder")
+    public void addFolder(@PathVariable Long feedId,@RequestParam Long folderId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        feedService.addFolder(feedId,folderId,userDetails.getUser());
+    }
 
     @PostMapping("/feed/{id}/like")
     public void like(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -57,4 +64,5 @@ public class FeedController {
     public boolean isLiked(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return feedService.isLiked(id, userDetails.getUser().getId());
     }
+   
 }
