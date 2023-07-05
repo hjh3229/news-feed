@@ -24,6 +24,9 @@ public class FeedResponseDto {
 
     private List<FolderResponseDto> feedFolderList = new ArrayList<>();
 
+    private int likeCounts;
+    private boolean isLike;
+
     public FeedResponseDto(Feed feed) {
         this.id = feed.getId();
         this.title = feed.getTitle();
@@ -39,5 +42,6 @@ public class FeedResponseDto {
             CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
             this.commentList.add(commentResponseDto);
         }
+        this.likeCounts = feed.getFeedLikeList().size();
     }
 }

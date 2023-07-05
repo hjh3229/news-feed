@@ -31,10 +31,9 @@ public class FeedLike {
         this.feed = feed;
     }
 
-    // isLike.ifPresentOrElse 를 통해 좋아요를 눌렀는지 확인하므로 필요 없음
-//    public static boolean isLikedFeed(Optional<FeedLike> optionalLike) {
-//        return optionalLike.isPresent();
-//    }
+    public static boolean isLikedFeed(Optional<FeedLike> optionalLike) {
+        return optionalLike.isPresent();
+    }
 
     public void mappingUser(User user) {
         this.user = user;

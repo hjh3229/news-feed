@@ -125,4 +125,18 @@ public class FeedService {
                 }
         );
     }
+
+    public boolean isLiked(Long feedId, Long userId) {
+        Feed feed = feedRepository.findById(feedId).orElseThrow(() ->
+                new IllegalArgumentException("해당 피드가 존재하지 않습니다.")
+        );
+//        User user = userRepository.findById(userId).orElseThrow(() ->
+//                new IllegalArgumentException("로그인 시 이용 가능합니다.")
+//        );
+        // 에러를 무시하는 방법
+        User user = userRepository.findById(userId).orElse(new User());
+        Optional<FeedLike> isLike = likeRepository.findByUserAndFeed(user, feed);
+        boolean isLiked = FeedLike.isLikedFeed(isLike);
+        return isLiked;
+    }
 }

@@ -46,7 +46,7 @@ public class Feed {
     private List<Comment> commentList = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "feed", cascade = CascadeType.REMOVE)
-    private List<FeedLike> feedLikes = new ArrayList<>();
+    private List<FeedLike> feedLikeList = new ArrayList<>();
 
     public Feed(FeedRequestDto requestDto, User user) {
         if (requestDto.getTitle() == null) {
@@ -70,14 +70,14 @@ public class Feed {
     }
 
     public void mappingFeedLike(FeedLike feedLike) { // 좋아요 수를 세기 위해 추가
-        this.feedLikes.add(feedLike);
+        this.feedLikeList.add(feedLike);
     }
 
     public void updateLikeCount() { // 피드 내 좋아요 수 확인은 따로 변수를 생성하지 않고 목록의 크기로 확인
-        this.likeCount = (long)this.feedLikes.size();
+        this.likeCount = (long)this.feedLikeList.size();
     }
 
     public void subLikeCount(FeedLike feedLike) { // 좋아요 목록에서 삭제
-        this.feedLikes.remove(feedLike);
+        this.feedLikeList.remove(feedLike);
     }
 }
