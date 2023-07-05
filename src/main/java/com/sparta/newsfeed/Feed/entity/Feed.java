@@ -3,12 +3,12 @@ package com.sparta.newsfeed.Feed.entity;
 import com.sparta.newsfeed.Comment.entity.Comment;
 import com.sparta.newsfeed.Feed.dto.FeedRequestDto;
 import com.sparta.newsfeed.FeedFolder.entity.FeedFolder;
+import com.sparta.newsfeed.Like.entity.FeedLike;
 import com.sparta.newsfeed.User.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,9 @@ public class Feed {
     @Column
     private String contents;
 
+    @Column
+    private Long likeCount;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -42,11 +45,10 @@ public class Feed {
     @OneToMany(mappedBy = "feed")
     private List<Comment> commentList = new ArrayList<>();
 
-    @ColumnDefault("0")
-    @Column(name = "view_count",nullable = false)
-    private Integer viewCount;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "feed", cascade = CascadeType.REMOVE)
+    private List<FeedLike> feedLikes = new ArrayList<>();
 
-    public Feed(FeedRequestDto requestDto, User user) { // 피드 수정과 같은 요구사항을 받으므로 update도 생성자 사용
+    public Feed(FeedRequestDto requestDto, User user) {
         if (requestDto.getTitle() == null) {
             this.title = requestDto.getUrl();
         } else {
@@ -65,5 +67,17 @@ public class Feed {
         }
         this.url = requestDto.getUrl();
         this.contents = requestDto.getContents();
+    }
+
+    public void mappingFeedLike(FeedLike feedLike) { // 좋아요 수를 세기 위해 추가
+        this.feedLikes.add(feedLike);
+    }
+
+    public void updateLikeCount() { // 피드 내 좋아요 수 확인은 따로 변수를 생성하지 않고 목록의 크기로 확인
+        this.likeCount = (long)this.feedLikes.size();
+    }
+
+    public void subLikeCount(FeedLike feedLike) { // 좋아요 목록에서 삭제
+        this.feedLikes.remove(feedLike);
     }
 }

@@ -3,12 +3,10 @@ package com.sparta.newsfeed.Feed.controller;
 import com.sparta.newsfeed.Common.security.UserDetailsImpl;
 import com.sparta.newsfeed.Feed.dto.FeedRequestDto;
 import com.sparta.newsfeed.Feed.dto.FeedResponseDto;
-import com.sparta.newsfeed.Feed.entity.Feed;
 import com.sparta.newsfeed.Feed.service.FeedService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,5 +40,10 @@ public class FeedController {
     public String deleteFeed(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         feedService.deleteFeed(id, userDetails.getUser());
         return "feedList";
+    }
+
+    @PostMapping("/feed/{id}/like")
+    public void like(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        feedService.like(id, userDetails.getUser().getId());
     }
 }
