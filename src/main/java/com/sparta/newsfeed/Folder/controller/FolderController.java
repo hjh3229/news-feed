@@ -7,6 +7,7 @@ import com.sparta.newsfeed.Folder.dto.FolderResponseDto;
 import com.sparta.newsfeed.Folder.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,10 +26,12 @@ public class FolderController {
         folderService.addFolders(folderName,userDetails.getUser());
     }
 
-    // 폴더 조회
-    @GetMapping("/folder")
-    public List<FolderResponseDto> getFolders(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        return folderService.getFolders(userDetails.getUser());
+    // 폴더 조회(수정)
+    @GetMapping("/folder/user={user_id}")
+    public String getFolders(@PathVariable Long user_id, Model model){
+        List<FolderResponseDto> folder = folderService.getFolders(user_id);
+        model.addAttribute("folder",folder);
+        return null; // 맞는 HTML 연결
     }
-
+    
 }

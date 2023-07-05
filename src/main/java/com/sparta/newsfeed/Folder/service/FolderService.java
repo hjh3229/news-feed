@@ -6,6 +6,7 @@ import com.sparta.newsfeed.Folder.repository.FolderRepository;
 import com.sparta.newsfeed.User.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class FolderService {
     // 폴더 추가
     public void addFolders(String folderName, User user) { // 폴더이름 1개와 유저 정보
 
-        List<Folder> existFolderList = folderRepository.findAllByUserAndTitleIn(user,folderName); 
+        List<Folder> existFolderList = folderRepository.findAllByUserAndTitleIn(user,folderName);
 
         if(!isExistFolderName(folderName,existFolderList)){
             Folder folder = new Folder(folderName, user);
@@ -30,14 +31,9 @@ public class FolderService {
     }
 
     // 폴더 조회
-    public List<FolderResponseDto> getFolders(User user){
-        List<Folder> folderList = folderRepository.findAllByUser(user);
-        List<FolderResponseDto> responseDtoList = new ArrayList<>();
-
-        for(Folder folder : folderList){
-            responseDtoList.add(new FolderResponseDto(folder));
-        }
-        return responseDtoList;
+    @Transactional(readOnly = true)
+    public List<FolderResponseDto> getFolders(Long userId){
+        return folderRepository.findAllByUser(userId).stream().map(FolderResponseDto::new).toList();
     }
 
     // DB에 있는 데이터인지 확인

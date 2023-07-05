@@ -2,6 +2,7 @@ package com.sparta.newsfeed.User.controller;
 
 
 import com.sparta.newsfeed.Common.security.UserDetailsImpl;
+import com.sparta.newsfeed.Folder.dto.FolderResponseDto;
 import com.sparta.newsfeed.User.service.UserService;
 import org.springframework.stereotype.Controller;
 import com.sparta.newsfeed.User.dto.*;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -51,11 +54,13 @@ public class UserController {
         return  userService.editPassword(userDetails.getUser(),requestDto);
     }
 
-    // folder model에 추가
-    @GetMapping("/user-folder")
-    public String getUserInfo(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        model.addAttribute("folder",folderService.getFolders(userDetails.getUser()));
-        return null;
+
+    // 회원이 저장한 폴더 조회
+    @GetMapping("/user-folder/user={user_id}")
+    public String getUserInfo(@PathVariable Long user_id, Model model){
+        List<FolderResponseDto> folder = folderService.getFolders(user_id);
+        model.addAttribute("folder",folder);
+        return null;  // 맞는 HTML 연결
     }
 
 }
