@@ -166,7 +166,7 @@ function showProfile() {
             $('#profile').append(`
                 <div class="header" style="float:left">
                     <div class="card-body p-5 text-center">
-                        <a href ="/newsfeed/feeds/${response.user_id}"
+                        <a href ="/newsfeed/feeds/user=${response.user_id}"
                         class="logo" style="font-weight: 200; color: inherit">
                         <p>${response.nickname}</p>
                         <p>${response.myContent}</p></a><br>
