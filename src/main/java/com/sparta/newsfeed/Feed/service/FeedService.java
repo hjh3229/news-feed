@@ -8,12 +8,11 @@ import com.sparta.newsfeed.FeedFolder.entity.FeedFolder;
 import com.sparta.newsfeed.FeedFolder.repository.FeedFolderRepository;
 import com.sparta.newsfeed.Folder.entity.Folder;
 import com.sparta.newsfeed.Folder.repository.FolderRepository;
+import com.sparta.newsfeed.Like.entity.FeedLike;
+import com.sparta.newsfeed.Like.repository.LikeRepository;
 import com.sparta.newsfeed.User.entity.User;
+import com.sparta.newsfeed.User.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +24,10 @@ import java.util.Optional;
 public class FeedService {
 
     private final FeedRepository feedRepository;
+    private final UserRepository userRepository;
     private final FolderRepository folderRepository;
     private final FeedFolderRepository feedFolderRepository;
+    private final LikeRepository likeRepository;
 
     public void create(User user, FeedRequestDto requestDto) {
         feedRepository.save(new Feed(requestDto,user));
@@ -97,5 +98,45 @@ public class FeedService {
             throw new IllegalArgumentException("중복된 촐더입니다.");
         }
         feedFolderRepository.save(new FeedFolder(feed,folder));
+    }
+
+    public void like(Long feedId, Long userId) {
+        Feed feed = feedRepository.findById(feedId).orElseThrow(() ->
+                new IllegalArgumentException("해당 피드가 존재하지 않습니다.")
+        );
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new IllegalArgumentException("로그인 시 이용 가능합니다.")
+        );
+        Optional<FeedLike> isLike = likeRepository.findByUserAndFeed(user, feed);
+
+        isLike.ifPresentOrElse(
+                like -> { // 게시물과 유저를 통해 좋아요를 이미 누른게 확인이 되면 삭제
+                    likeRepository.delete(like);
+                    feed.subLikeCount(like);
+                },
+                () -> { // 좋아요를 아직 누르지 않았을 땐 추가
+                    FeedLike like = new FeedLike(user, feed);
+
+                    like.mappingFeed(feed);
+                    like.mappingUser(user);
+                    feed.updateLikeCount();
+
+                    likeRepository.save(like);
+                }
+        );
+    }
+
+    public boolean isLiked(Long feedId, Long userId) {
+        Feed feed = feedRepository.findById(feedId).orElseThrow(() ->
+                new IllegalArgumentException("해당 피드가 존재하지 않습니다.")
+        );
+//        User user = userRepository.findById(userId).orElseThrow(() ->
+//                new IllegalArgumentException("로그인 시 이용 가능합니다.")
+//        );
+        // 에러를 무시하는 방법
+        User user = userRepository.findById(userId).orElse(new User());
+        Optional<FeedLike> isLike = likeRepository.findByUserAndFeed(user, feed);
+        boolean isLiked = FeedLike.isLikedFeed(isLike);
+        return isLiked;
     }
 }
