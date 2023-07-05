@@ -33,6 +33,11 @@
         <button type="button" class="btn btn-light" onclick="location.href='/newsfeed/user/loin-page'">비밀번호 변경</button>
         <br>
         <br>
+        <form th:href="@{/newsfeed/newFeed}">
+            <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+            <button type="submit"
+                    class="btn btn-secondary btn-sm">추가하기</button>
+        </form>
         <button type="button" onclick="location.href='/newsfeed/newFeed'" class="btn btn-secondary btn-sm mb-3">추가하기</button>
     </div>
 </div>
@@ -55,11 +60,21 @@
                 <h5 class="card-title" th:text="${item.title}"></h5>
                 <h5 class="card-title" th:text="${item.url}"></h5>
                 <h5 class="card-title" th:text="${item.contents}"></h5>
-                <a th:href ="@{/newsfeed/newFeed/{feed_id}(feed_id=${item.id})}"
-                   class="logo" th:text="수정"></a>
+
+<!--                <a th:href ="@{/newsfeed/newFeed/{feed_id}(feed_id=${item.id})}"-->
+<!--                   class="logo" th:text="수정"></a>-->
+                <input type="hidden" id="item-id" th:value="${item.id}">
+                <button type="button" id="modify-btn"
+                        th:onclick="|location.href='@{/newsfeed/newFeed?feed_id={feed_id}(feed_id=${item.id})}'|"
+                        class="btn btn-primary btn-sm">수정</button>
                 <br>
                 <button type="button" id="delete-btn"
                         class="btn btn-secondary btn-sm">삭제</button>
+<!--                <form th:action="@{/newsfeed/newFeed/{feed_id}(feed_id=${item.id})}" th:method="DELETE">-->
+<!--                    <input type="hidden" name="_method" value="delete">-->
+<!--                <button type="submit"-->
+<!--                        class="btn btn-secondary btn-sm">삭제</button>-->
+<!--                </form>-->
             </div>
         </div>
         <br>

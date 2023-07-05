@@ -20,6 +20,7 @@
 <br>
 <div class="header" style="float:left">
     <div class="card-body p-5 text-center">
+        <div id="profile"></div>
         <span id="username"></span>
         <br>
         <span id="nickname"></span>
@@ -49,7 +50,7 @@
     <div class="row">
         <div class="col-lg-8">
             <article>
-                <input type="hidden" id="article-id" th:value="${feed.id}">
+                <input type="hidden" id="feed-id" th:value="${feed.id}">
                 <header class="mb-4">
                     <input type="text" class="form-control" placeholder="제목" id="title" th:value="${feed.title}">
                 </header>

@@ -34,14 +34,13 @@ public class HomeController {
     }
 
     @GetMapping("newsfeed/newFeed")
-    public String getFeed(Model model) {
-        model.addAttribute("feed",new FeedResponseDto());
-        return "feed";
-    }
-    @GetMapping("newsfeed/newFeed/{feed_id}")
-    public String getFeedByFeedId(@PathVariable Long feed_id, Model model) {
-        FeedResponseDto feed = feedService.getFeed(feed_id);
-        model.addAttribute("feed", feed);
+    public String getFeed(@RequestParam(required = false) Long feed_id, Model model) {
+        if(feed_id==null) {
+            model.addAttribute("feed", new FeedResponseDto());
+        }else{
+            FeedResponseDto feed = feedService.getFeed(feed_id);
+            model.addAttribute("feed", feed);
+        }
         return "feed";
     }
 }
