@@ -31,7 +31,7 @@ public class FeedLike {
         this.feed = feed;
     }
 
-    public static boolean isLikedFeed(Optional<FeedLike> optionalLike) {
+    public static boolean isLikedFeed(Optional<FeedLike> optionalLike) { // 좋아요 여부 반환
         return optionalLike.isPresent();
     }
 

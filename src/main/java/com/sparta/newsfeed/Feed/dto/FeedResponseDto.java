@@ -25,7 +25,6 @@ public class FeedResponseDto {
     private List<FolderResponseDto> feedFolderList = new ArrayList<>();
 
     private int likeCounts;
-    private boolean isLike;
 
     public FeedResponseDto(Feed feed) {
         this.id = feed.getId();
