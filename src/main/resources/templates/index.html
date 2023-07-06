@@ -38,18 +38,23 @@
 
 
                 <a href="javascript:doDisplay();"> 댓글</a><br/><br/>
-                <div id="myDIV">
+                <div id="myDIV" style= "display: none">
                     <div class="row-6" th:each="comment : ${feed.commentList}">
-                        <div>
-                            <span th:text="${comment.comments}"></span>
-                            <span th:text="${comment.username}"></span>
+                        <input type="hidden" id="comment-id" th:value="${comment.id}">
                             <div>
-                                <input id="comment-input" placeholder="댓글을 입력해 주세요.">
-                                <button id="comment-btn">등록</button>
+                                <span th:text="${comment.username}"></span> :
+                                <input id="comment" th:value="${comment.comments}"></input>
+                                <button class="btn bnt-black" style="font-size: 2px" id="commentUpdate-btn">수정</button>
+                                <button class="btn bnt-black" style="font-size: 2px" id="commentDelete-btn">삭제</button>
                             </div>
+
+                        </div>
+                            <input id="comments" placeholder="댓글을 입력해 주세요.">
+                            <button class="btn bnt-black" style="font-size: 2px" id="comment-btn">등록</button>
                         </div>
                     </div>
-                </div>
+                <div>
+
 
             </div>
         </div>
@@ -60,10 +65,10 @@
 <script type="text/javascript">
     var bDisplay = true; function doDisplay(){
         var con = document.getElementById("myDIV");
-        if(con.style.display=='block'){
-            con.style.display = 'none';
-        }else{
+        if(con.style.display=='none'){
             con.style.display = 'block';
+        }else{
+            con.style.display = 'none';
         }
     }
 </script>

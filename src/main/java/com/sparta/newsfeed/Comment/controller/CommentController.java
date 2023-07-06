@@ -22,7 +22,6 @@ public class CommentController {
     }
 
     @PutMapping("/comment/{comment_id}")
-    @ResponseBody
     public void updateComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long comment_id, @RequestBody CommentRequestDto requestDto) {
         commentService.updateComment(userDetails.getUser(), comment_id, requestDto);
     }
