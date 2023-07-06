@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,9 +45,13 @@ public class FeedService {
     }
 
     @Transactional(readOnly = true)
-    public List<FeedResponseDto> getFeedsByFolder(Long folderId) {
-        List<FeedResponseDto> feedList = feedRepository.findAllByFeedFolderList_FolderId(folderId);
-        return feedList;
+    public List<FeedResponseDto> getFeedsByFolder(Long folderId, User user) {
+        List<Feed> feedList = feedRepository.findAllByUserAndFeedFolderList_FolderId(user, folderId);
+        List<FeedResponseDto> responseDtoList = new ArrayList<>();
+        for (Feed feed : feedList) {
+            responseDtoList.add(new FeedResponseDto(feed));
+        }
+        return responseDtoList;
     }
   
       public FeedResponseDto getFeed(Long feed_id) {
