@@ -44,16 +44,24 @@ public class FeedService {
         return feedRepository.findAllByUserId(userId).stream().map(FeedResponseDto::new).toList();
     }
 
+//    @Transactional(readOnly = true)
+//    public List<FeedResponseDto> getFeedsByFolder(Long folderId, User user) {
+//        List<Feed> feedList = feedRepository.findAllByUserAndFeedFolderList_FolderId(user, folderId);
+//        List<FeedResponseDto> responseDtoList = new ArrayList<>();
+//        for (Feed feed : feedList) {
+//            responseDtoList.add(new FeedResponseDto(feed));
+//        }
+//        return responseDtoList;
+//    }
     @Transactional(readOnly = true)
-    public List<FeedResponseDto> getFeedsByFolder(Long folderId, User user) {
-        List<Feed> feedList = feedRepository.findAllByUserAndFeedFolderList_FolderId(user, folderId);
+    public List<FeedResponseDto> getFeedsByFolder(Long folderId) {
+        List<Feed> feedList = feedRepository.findAllByFeedFolderList_FolderId(folderId);
         List<FeedResponseDto> responseDtoList = new ArrayList<>();
         for (Feed feed : feedList) {
             responseDtoList.add(new FeedResponseDto(feed));
         }
         return responseDtoList;
     }
-  
       public FeedResponseDto getFeed(Long feed_id) {
         Feed feed = feedRepository.findById(feed_id).orElseThrow(
                 ()->new NullPointerException("not found Feed")

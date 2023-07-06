@@ -54,9 +54,15 @@ public class HomeController {
     }
 
     // Feedlist in folder
+//    @GetMapping("newsfeed/feeds/folders")
+//    public String getFeedsByFolder(@RequestParam Long folder_id, @AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
+//        List<FeedResponseDto> feeds = feedService.getFeedsByFolder(folder_id,userDetails.getUser());
+//        model.addAttribute("feeds",feeds);
+//        return "folderList";
+//    }
     @GetMapping("newsfeed/feeds/folders")
-    public String getFeedsByFolder(@RequestParam Long folder_id, @AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
-        List<FeedResponseDto> feeds = feedService.getFeedsByFolder(folder_id,userDetails.getUser());
+    public String getFeedsByFolder(@RequestParam Long folder_id, Model model) {
+        List<FeedResponseDto> feeds = feedService.getFeedsByFolder(folder_id);
         model.addAttribute("feeds",feeds);
         return "folderList";
     }
