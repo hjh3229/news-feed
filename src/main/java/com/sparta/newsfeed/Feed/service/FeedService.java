@@ -45,8 +45,8 @@ public class FeedService {
     }
 
     @Transactional(readOnly = true)
-    public List<FeedResponseDto> getFeedsByFolder(Long folderId, User user) {
-        List<Feed> feedList = feedRepository.findAllByUserAndFeedFolderList_FolderId(user, folderId);
+    public List<FeedResponseDto> getFeedsByFolder(Long folderId) {
+        List<Feed> feedList = feedRepository.findAllByFeedFolderList_FolderId(folderId);
         List<FeedResponseDto> responseDtoList = new ArrayList<>();
         for (Feed feed : feedList) {
             responseDtoList.add(new FeedResponseDto(feed));
@@ -105,6 +105,7 @@ public class FeedService {
         feedFolderRepository.save(new FeedFolder(feed,folder));
     }
 
+    @Transactional
     public void like(Long feedId, Long userId) {
         Feed feed = feedRepository.findById(feedId).orElseThrow(() ->
                 new IllegalArgumentException("해당 피드가 존재하지 않습니다.")
