@@ -29,10 +29,4 @@ public class Folder {
         this.title = title;
         this.user = user;
     }
-
-
-
-
-
-
 }
