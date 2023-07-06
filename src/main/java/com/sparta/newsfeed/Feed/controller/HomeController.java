@@ -1,18 +1,15 @@
 package com.sparta.newsfeed.Feed.controller;
 
-import com.sparta.newsfeed.Common.security.UserDetailsImpl;
 import com.sparta.newsfeed.Feed.dto.FeedResponseDto;
-import com.sparta.newsfeed.Feed.entity.Feed;
 import com.sparta.newsfeed.Feed.service.FeedService;
 import com.sparta.newsfeed.Folder.dto.FolderResponseDto;
 import com.sparta.newsfeed.Folder.service.FolderService;
-import com.sparta.newsfeed.User.entity.User;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 

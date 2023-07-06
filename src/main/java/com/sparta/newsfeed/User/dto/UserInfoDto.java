@@ -1,6 +1,5 @@
 package com.sparta.newsfeed.User.dto;
 
-import com.sparta.newsfeed.Common.security.UserDetailsImpl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

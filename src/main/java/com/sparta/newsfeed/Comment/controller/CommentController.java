@@ -1,10 +1,8 @@
 package com.sparta.newsfeed.Comment.controller;
 
 import com.sparta.newsfeed.Comment.dto.CommentRequestDto;
-import com.sparta.newsfeed.Comment.dto.CommentResponseDto;
 import com.sparta.newsfeed.Comment.service.CommentService;
 import com.sparta.newsfeed.Common.security.UserDetailsImpl;
-import com.sparta.newsfeed.Folder.dto.FolderRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

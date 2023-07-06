@@ -113,6 +113,7 @@ public class FeedService {
         feedFolderRepository.save(new FeedFolder(feed,folder));
     }
 
+    @Transactional
     public void like(Long feedId, Long userId) {
         Feed feed = feedRepository.findById(feedId).orElseThrow(() ->
                 new IllegalArgumentException("해당 피드가 존재하지 않습니다.")
