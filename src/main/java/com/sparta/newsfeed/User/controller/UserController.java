@@ -5,6 +5,7 @@ import com.sparta.newsfeed.Common.security.UserDetailsImpl;
 import com.sparta.newsfeed.Folder.service.FolderService;
 import com.sparta.newsfeed.User.dto.*;
 import com.sparta.newsfeed.User.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -42,9 +43,13 @@ public class UserController {
 
     @PostMapping("/password")
     @ResponseBody
-    public CheckPasswordResponseDto checkPassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody CheckPasswordRequestDto requestDto){
-        CheckPasswordResponseDto responseDto = new CheckPasswordResponseDto(userService.checkPassword(userDetails, requestDto));
-        return responseDto;
+    public String checkPassword(HttpServletResponse res, @AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody CheckPasswordRequestDto requestDto){
+        try{
+            userService.checkPassword(userDetails, requestDto);
+        }catch(Exception e){
+            res.setStatus(400);
+        }
+        return "로그인 성공";
     }
 
     @PutMapping("/password")

@@ -195,12 +195,18 @@ $(document).ready(function () {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    new_password: document.getElementById('checkPassword').value,
+                    password: document.getElementById('checkPassword').value,
                 })
             })
-                .then(() => {
-                    $("#passwordForm").hide();
-                    $("#newPasswordForm").show();
+                .then((response) => {
+                    if(response.ok){
+                        $("#passwordForm").hide();
+                        $("#newPasswordForm").show();
+                    } else {
+                        alert('비밀번호가 틀렸습니다.');
+                        location.replace('/newsfeed/user/introduce');
+                    }
+
                 });
         });
     }
