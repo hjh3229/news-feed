@@ -9,6 +9,7 @@ import com.sparta.newsfeed.Feed.repository.FeedRepository;
 import com.sparta.newsfeed.User.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +26,7 @@ public class CommentService {
         new CommentResponseDto(comment);
     }
 
+    @Transactional
     public void updateComment(User user, Long id, CommentRequestDto requestDto) {
         Comment comment = commentRepository.findById(id).orElseThrow(() ->
                 new RuntimeException("없는 댓글입니다.")

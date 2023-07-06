@@ -1,8 +1,9 @@
 package com.sparta.newsfeed.Feed.controller;
 
-import com.sparta.newsfeed.Common.security.UserDetailsImpl;
 import com.sparta.newsfeed.Feed.dto.FeedResponseDto;
 import com.sparta.newsfeed.Feed.service.FeedService;
+import com.sparta.newsfeed.Folder.dto.FolderResponseDto;
+import com.sparta.newsfeed.Folder.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,8 +52,8 @@ public class HomeController {
 
     // Feedlist in folder
     @GetMapping("newsfeed/feeds/folders")
-    public String getFeedsByFolder(@RequestParam Long folder_id, @AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
-        List<FeedResponseDto> feeds = feedService.getFeedsByFolder(folder_id,userDetails.getUser());
+    public String getFeedsByFolder(@RequestParam Long folder_id, Model model) {
+        List<FeedResponseDto> feeds = feedService.getFeedsByFolder(folder_id);
         model.addAttribute("feeds",feeds);
         return "folderList";
     }
