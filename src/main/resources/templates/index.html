@@ -29,9 +29,35 @@
                 <h5 class="card-title" th:text="${item.title}"></h5>
                 <h6 class="card-title" th:text="${item.url}"></h6>
                 <h6 class="card-title" th:text="${item.contents}"></h6>
+                <div>
+                    <input type="hidden" id="feed-id" th:value="${item.id}">
+                    <label style="font-size: 5px">추천 </label>
+                    <label style="font-size: 5px" th:text="${item.likeCounts}"></label>
+                    <button class="btn btn-black" style="font-size: 8px" id="like-btn">추천하기</button>
+                </div>
+
+
+<!--                <div id="form-commentInfo">-->
+<!--                    <div id="comment-count">댓글수:  <span id="count" th:text="${#lists.size(item.commentList)}"></span></div>-->
+<!--                    <input id="comment-input" placeholder="댓글을 입력해 주세요.">-->
+<!--                    <button id="submit" onclick="comment()">등록</button>-->
+<!--                </div>-->
+<!--                <div id=comments>-->
+<!--                    <ul>-->
+<!--                        <li th:each="comment : ${item.commentList}">-->
+<!--                            <div>-->
+<!--                                <span th:text="${comment.comments}"></span>-->
+<!--                                <span th:text="${comment.username}"></span>-->
+<!--                            </div>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
             </div>
         </div>
         <br>
     </div>
 </section>
 </body>
+<script>
+
+</script>

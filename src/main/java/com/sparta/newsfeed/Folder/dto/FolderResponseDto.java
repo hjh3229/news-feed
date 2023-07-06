@@ -1,7 +1,9 @@
 package com.sparta.newsfeed.Folder.dto;
 
 import com.sparta.newsfeed.Folder.entity.Folder;
+import lombok.Getter;
 
+@Getter
 public class FolderResponseDto {
     private Long id;
     private String title;
