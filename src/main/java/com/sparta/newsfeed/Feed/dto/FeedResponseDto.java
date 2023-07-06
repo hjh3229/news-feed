@@ -20,7 +20,7 @@ public class FeedResponseDto {
     private String contents;
     private Long userid;
     private String username;
-    private List<CommentResponseDto> commentList;
+    private List<CommentResponseDto> commentList; // Comment entity로 생성 시 순환 참조 문제가 발생
 
     private List<FolderResponseDto> feedFolderList = new ArrayList<>();
 

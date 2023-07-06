@@ -2,7 +2,6 @@ package com.sparta.newsfeed.User.controller;
 
 
 import com.sparta.newsfeed.Common.security.UserDetailsImpl;
-import com.sparta.newsfeed.Folder.service.FolderService;
 import com.sparta.newsfeed.User.dto.*;
 import com.sparta.newsfeed.User.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-    private final FolderService folderService;
 
     @PostMapping("/user/sign-up")
     public String createUser(SignupRequestDto requestDto){
