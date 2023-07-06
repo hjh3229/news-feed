@@ -2,17 +2,13 @@ package com.sparta.newsfeed.User.controller;
 
 
 import com.sparta.newsfeed.Common.security.UserDetailsImpl;
-import com.sparta.newsfeed.Folder.dto.FolderResponseDto;
-import com.sparta.newsfeed.User.service.UserService;
-import org.springframework.stereotype.Controller;
-import com.sparta.newsfeed.User.dto.*;
 import com.sparta.newsfeed.Folder.service.FolderService;
+import com.sparta.newsfeed.User.dto.*;
+import com.sparta.newsfeed.User.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
