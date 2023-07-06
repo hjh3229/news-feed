@@ -10,5 +10,5 @@ import java.util.List;
 public interface FeedRepository extends JpaRepository<Feed,Long> {
     //List<Feed> findAllByOrderByModifiedAtDesc();
     List<Feed> findAllByUserId(Long userid);
-    List<FeedResponseDto> findAllByFeedFolderList_FolderId(Long folderId);
+    List<Feed> findAllByUserAndFeedFolderList_FolderId(User user, Long folderId);
 }

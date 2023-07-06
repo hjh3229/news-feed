@@ -57,7 +57,6 @@ public class FeedController {
     프론트에서 이 api를 로그인 상태일 때만 불러오도록 수정하셔도 좋을 것 같습니다.
     좋아요를 누르면 ture
     */
-
     @GetMapping("/feed/{id}/like")
     public boolean isLiked(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return feedService.isLiked(id, userDetails.getUser().getId());

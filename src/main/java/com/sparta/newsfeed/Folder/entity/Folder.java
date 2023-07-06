@@ -30,10 +30,4 @@ public class Folder {
         this.title = requestDto.getTitle();
         this.user = user;
     }
-
-
-
-
-
-
 }
