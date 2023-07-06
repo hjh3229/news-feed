@@ -118,6 +118,7 @@ public class FeedService {
                 like -> { // 게시물과 유저를 통해 좋아요를 이미 누른게 확인이 되면 삭제
                     likeRepository.delete(like);
                     feed.subLikeCount(like);
+                    feed.updateLikeCount();
                 },
                 () -> { // 좋아요를 아직 누르지 않았을 땐 추가
                     FeedLike like = new FeedLike(user, feed);
