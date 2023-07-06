@@ -67,7 +67,9 @@ $(document).ready(function () {
 
     if (deleteButton) {
         deleteButton.addEventListener('click', event => {
-            let id = document.getElementById('item-id').value;
+            let params = new URLSearchParams(location.search);
+            let id = params.get('feed_id');
+
             fetch(`/newsfeed/feed/${id}`, {
                 method: 'DELETE'
             })

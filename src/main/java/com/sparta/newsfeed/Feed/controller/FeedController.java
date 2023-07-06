@@ -40,7 +40,7 @@ public class FeedController {
     }
   
     // 폴더 추가
-    @PostMapping("{feedId}/folder")
+    @PostMapping("/feed/{feedId}/folder")
     public void addFolder(@PathVariable Long feedId,@RequestParam Long folderId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         feedService.addFolder(feedId,folderId,userDetails.getUser());
     }

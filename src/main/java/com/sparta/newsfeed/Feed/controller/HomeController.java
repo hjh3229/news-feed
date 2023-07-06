@@ -1,5 +1,6 @@
 package com.sparta.newsfeed.Feed.controller;
 
+import com.sparta.newsfeed.Common.security.UserDetailsImpl;
 import com.sparta.newsfeed.Feed.dto.FeedResponseDto;
 import com.sparta.newsfeed.Feed.entity.Feed;
 import com.sparta.newsfeed.Feed.service.FeedService;
@@ -53,11 +54,10 @@ public class HomeController {
     }
 
     // Feedlist in folder
-    @GetMapping("newsfeed/feeds/folders={folder_id}")
-    public String getFeedsByFolder(@PathVariable Long folder_id, Model model) {
-        List<FeedResponseDto> feeds = feedService.getFeedsByFolder(folder_id);
+    @GetMapping("newsfeed/feeds/folders")
+    public String getFeedsByFolder(@RequestParam Long folder_id, @AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
+        List<FeedResponseDto> feeds = feedService.getFeedsByFolder(folder_id,userDetails.getUser());
         model.addAttribute("feeds",feeds);
         return "folderList";
-
     }
 }

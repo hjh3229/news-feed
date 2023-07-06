@@ -1,7 +1,7 @@
 package com.sparta.newsfeed.Feed.repository;
 
-import com.sparta.newsfeed.Feed.dto.FeedResponseDto;
 import com.sparta.newsfeed.Feed.entity.Feed;
+import com.sparta.newsfeed.User.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
