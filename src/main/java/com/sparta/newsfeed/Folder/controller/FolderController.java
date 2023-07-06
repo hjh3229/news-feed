@@ -19,7 +19,7 @@ public class FolderController {
     private final FolderService folderService;
 
     // 폴더 생성
-    @PostMapping("/folders")
+    @PostMapping("/folder")
     public void addFolder(@RequestBody FolderRequestDto folderRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         folderService.addFolders(folderRequestDto.getFolderName(),userDetails.getUser());
     }
