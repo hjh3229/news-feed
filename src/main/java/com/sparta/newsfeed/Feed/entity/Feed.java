@@ -49,7 +49,7 @@ public class Feed {
     private List<FeedLike> feedLikeList = new ArrayList<>();
 
     public Feed(FeedRequestDto requestDto, User user) {
-        if (requestDto.getTitle() == null) {
+        if (requestDto.getTitle() == null) { // 제목을 입력 안하면 url이 출력되도록
             this.title = requestDto.getUrl();
         } else {
             this.title = requestDto.getTitle();
