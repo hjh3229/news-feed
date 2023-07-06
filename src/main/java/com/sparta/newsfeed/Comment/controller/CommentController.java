@@ -16,20 +16,20 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/comment")
-    public void createComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody CommentRequestDto requestDto, @RequestBody Long blog_id) {
+    @PostMapping("/comment/{blog_id}")
+    public void createComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody CommentRequestDto requestDto, @PathVariable Long blog_id) {
         commentService.createComment(userDetails.getUser(), requestDto, blog_id);
     }
 
-    @PutMapping("/comment")
+    @PutMapping("/comment/{comment_id}")
     @ResponseBody
-    public void updateComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody Long id, @RequestBody CommentRequestDto requestDto) {
-        commentService.updateComment(userDetails.getUser(), id, requestDto);
+    public void updateComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long comment_id, @RequestBody CommentRequestDto requestDto) {
+        commentService.updateComment(userDetails.getUser(), comment_id, requestDto);
     }
 
-    @DeleteMapping("/comment")
-    public ResponseEntity<String> deleteComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long id) {
-        commentService.deleteComment(userDetails.getUser(), id);
+    @DeleteMapping("/comment/{comment_id}")
+    public ResponseEntity<String> deleteComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long comment_id) {
+        commentService.deleteComment(userDetails.getUser(), comment_id);
         return ResponseEntity.status(HttpStatus.OK).body("댓글 삭제 성공");
     }
 }

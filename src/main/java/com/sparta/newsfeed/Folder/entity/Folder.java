@@ -1,5 +1,6 @@
 package com.sparta.newsfeed.Folder.entity;
 
+import com.sparta.newsfeed.Folder.dto.FolderRequestDto;
 import com.sparta.newsfeed.User.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,8 +26,8 @@ public class Folder {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Folder(String title, User user){
-        this.title = title;
+    public Folder(FolderRequestDto requestDto, User user){
+        this.title = requestDto.getTitle();
         this.user = user;
     }
 }

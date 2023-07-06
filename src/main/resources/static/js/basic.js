@@ -67,7 +67,9 @@ $(document).ready(function () {
 
     if (deleteButton) {
         deleteButton.addEventListener('click', event => {
-            let id = document.getElementById('item-id').value;
+            let params = new URLSearchParams(location.search);
+            let id = params.get('feed_id');
+
             fetch(`/newsfeed/feed/${id}`, {
                 method: 'DELETE'
             })
@@ -77,7 +79,21 @@ $(document).ready(function () {
                 });
         });
     }
-    // 수정 기능
+    const likeButton = document.getElementById('like-btn');
+
+    if (likeButton) {
+        likeButton.addEventListener('click', event => {
+            let id = document.getElementById('feed-id').value;
+            fetch(`/feed/${id}/like`, {
+                method: 'POST'
+            })
+                .then(() => {
+                    alert('좋아요 성공!');
+                    location.replace('/');
+                });
+        });
+    }
+    // profile 수정 기능
     const modifyIntroButton = document.getElementById('modifyIntro-btn');
 
     if (modifyIntroButton) {
@@ -145,6 +161,8 @@ $(document).ready(function () {
                 });
         });
     }
+
+
 
 
 })

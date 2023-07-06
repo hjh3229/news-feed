@@ -24,6 +24,13 @@
     <div class="row">
         <div class="col-lg-8">
             <article>
+                <header class="mb-4">
+                    <div type="hidden" th:value="${feed.feedFolderList}">
+                        <div class="row-6" th:each = "folder : ${feed.feedFolderList}">
+                            <textarea type="text" class="form-control" placeholder="폴더" id="folder" th:text="${folder.title}"></textarea>
+                        </div>
+                    </div>
+                </header>
                 <input type="hidden" id="feed-id" th:value="${feed.id}">
                 <header class="mb-4">
                     <input type="text" class="form-control" placeholder="제목" id="title" th:value="${feed.title}">
@@ -35,6 +42,7 @@
                     <textarea class="form-control h-25" rows="10" placeholder="내용" id="content" th:text="${feed.contents}"></textarea>
                 </section>
                 <button th:if="${feed.id} != null" type="button" id="modify-btn" class="btn btn-dark">수정</button>
+                <button th:if="${feed.id} != null" type="button" id="delete-btn" class="btn btn-dark">삭제</button>
                 <button th:if="${feed.id} == null" type="button" id="create-btn" class="btn btn-dark">등록</button>
             </article>
         </div>

@@ -6,12 +6,13 @@ import com.sparta.newsfeed.Folder.dto.FolderResponseDto;
 import com.sparta.newsfeed.Folder.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/newsfeed")
 @RequiredArgsConstructor
 public class FolderController {
@@ -20,8 +21,9 @@ public class FolderController {
 
     // 폴더 생성
     @PostMapping("/folder")
+    @ResponseBody
     public void addFolder(@RequestBody FolderRequestDto folderRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        folderService.addFolders(folderRequestDto.getFolderName(),userDetails.getUser());
+        folderService.addFolders(folderRequestDto,userDetails.getUser());
     }
 
     // 폴더 조회(수정)
