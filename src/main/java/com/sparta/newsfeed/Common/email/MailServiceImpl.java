@@ -126,7 +126,7 @@ public class MailServiceImpl implements MailService {
         if(!codeDto.getCode().equals(mail.getEmail_code())){
             throw new IllegalArgumentException("인증번호가 일치하지 않습니다.");
         }
-
+        System.out.println("인증완료");
         return "인증되었습니다.";
     };
 }
