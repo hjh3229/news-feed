@@ -1,5 +1,6 @@
 package com.sparta.newsfeed.Common.email;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,12 @@ public class MailController {
 
     //인증번호 비교
     @PostMapping("/user/mailcompare")
-    String mailCodeCompare(@RequestBody CodeDto codeDto){
-        return  mailService.compareCode(codeDto);
+    String mailCodeCompare(@RequestBody CodeDto codeDto, HttpServletResponse res){
+        try{
+            mailService.compareCode(codeDto);
+        }catch(Exception e){
+            res.setStatus(400);
+        }
+        return "로그인 성공";
     }
 }
