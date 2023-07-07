@@ -25,10 +25,11 @@
 
 <section class="d-flex vh-100">
     <div class="container-fluid row justify-content-center align-content-center">
+        <button class="btn btn-dark" style="font-size: 2px"
+                onclick="location.href='/newsfeed/folder'"
+                id="folder-btn">폴더 생성</button>
         <div class="row-6" th:each = "folder : ${folders}">
             <div class="card-body p-3 text-center">
-<!--                <a th:href ="@{/newsfeed/feeds/folder={forder_id}(folder_id=${folder.id})}"-->
-<!--                   class="logo" style="font-weight: 200; color: inherit" th:text="${folder.title}"></a><h5></h5>-->
                 <button type="button" style="font-size: 10px" id="btn"
                         th:onclick="|location.href='@{/newsfeed/feeds/folders?folder_id={folder_id}(folder_id=${folder.id})}'|"
                         class="btn btn-light" th:text="${folder.title}"></button>

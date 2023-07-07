@@ -50,6 +50,18 @@ public class HomeController {
         return "feed";
     }
 
+    //folder create
+    @GetMapping("newsfeed/folder")
+    public String getfolder(@RequestParam(required = false) Long folder_id, Model model) {
+        if(folder_id==null) {
+            model.addAttribute("folder", new FolderResponseDto());
+        }else{
+            FolderResponseDto folder = folderService.getFolder(folder_id);
+            model.addAttribute("folder", folder);
+        }
+        return "folder";
+    }
+
     // Feedlist in folder
     @GetMapping("newsfeed/feeds/folders")
     public String getFeedsByFolder(@RequestParam Long folder_id, Model model) {

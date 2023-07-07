@@ -21,8 +21,7 @@ public class CommentController { // 코멘트 조회는 FeedResponse에서 대�
         commentService.createComment(userDetails.getUser(), requestDto, blog_id);
     }
 
-    @PutMapping("/comment/{comment_id}") // 해당 코멘트 수정
-    @ResponseBody
+    @PutMapping("/comment/{comment_id}")
     public void updateComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long comment_id, @RequestBody CommentRequestDto requestDto) {
         commentService.updateComment(userDetails.getUser(), comment_id, requestDto);
     }

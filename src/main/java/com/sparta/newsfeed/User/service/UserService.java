@@ -7,6 +7,7 @@ import com.sparta.newsfeed.User.entity.User;
 import com.sparta.newsfeed.User.entity.UserRoleEnum;
 import com.sparta.newsfeed.User.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,13 +73,10 @@ public class UserService {
     }
 
     @Transactional
-    public boolean checkPassword(UserDetailsImpl userDetails, CheckPasswordRequestDto requestDto) {
-        User user = userDetails.getUser();
-        System.out.println(requestDto.getPassword());
-        if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
+    public void checkPassword(UserDetailsImpl userDetails, CheckPasswordRequestDto requestDto) {
+        if (!passwordEncoder.matches(requestDto.getPassword(), userDetails.getUser().getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
-        return true;
     }
     @Transactional
     public SignupResponseDto editPassword(User user, EditPasswordRequestDto requestDto) {
