@@ -108,7 +108,7 @@ public class FeedService {
         Optional<FeedFolder> overlapFolder = feedFolderRepository.findByFeedAndFolder(feed,folder);
 
         if(overlapFolder.isPresent()){
-            throw new IllegalArgumentException("중복된 촐더입니다.");
+            throw new IllegalArgumentException("중복된 폴더입니다.");
         }
         feedFolderRepository.save(new FeedFolder(feed,folder));
     }

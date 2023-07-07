@@ -2,15 +2,14 @@ package com.sparta.newsfeed.Folder.controller;
 
 import com.sparta.newsfeed.Common.security.UserDetailsImpl;
 import com.sparta.newsfeed.Folder.dto.FolderRequestDto;
-import com.sparta.newsfeed.Folder.dto.FolderResponseDto;
 import com.sparta.newsfeed.Folder.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/newsfeed")
@@ -25,13 +24,4 @@ public class FolderController {
     public void addFolder(@RequestBody FolderRequestDto folderRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         folderService.addFolders(folderRequestDto,userDetails.getUser());
     }
-
-    // 폴더 조회(수정)
-    @GetMapping("/folders/user={user_id}")
-    public String getFolders(@PathVariable Long user_id, Model model){
-        List<FolderResponseDto> folder = folderService.getFolders(user_id);
-        model.addAttribute("folder",folder);
-        return null; // 맞는 HTML 연결
-    }
-    
 }

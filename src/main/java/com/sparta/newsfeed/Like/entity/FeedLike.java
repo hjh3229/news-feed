@@ -35,12 +35,12 @@ public class FeedLike {
         return optionalLike.isPresent();
     }
 
-    public void mappingUser(User user) {
+    public void mappingUser(User user) { // user mapping
         this.user = user;
         user.mappingLike(this);
     }
 
-    public void mappingFeed(Feed feed) {
+    public void mappingFeed(Feed feed) { // feed mapping
         this.feed = feed;
         feed.mappingFeedLike(this);
     }
