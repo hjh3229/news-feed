@@ -17,7 +17,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/user/sign-up")
-    public String createUser(SignupRequestDto requestDto){
+    public String createUser(@RequestBody SignupRequestDto requestDto){
         userService.createUser(requestDto);
         return "redirect:/user/login-page";
     }

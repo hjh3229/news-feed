@@ -9,6 +9,89 @@ $(document).ready(function () {
         showProfile();
         $("#login-button").hide();
     }
+    //회원가입
+    const signupButton = document.getElementById('signup-btn');
+
+    if (signupButton) {
+        signupButton.addEventListener('click', event => {
+
+            fetch(`/user/sign-up`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: document.getElementById('username').value,
+                    password: document.getElementById('password').value,
+                    email: document.getElementById('email').value,
+                })
+            })
+                .then(() => {
+
+                    alert('회원가입 성공!');
+                    location.replace('/user/login-page');
+
+
+                });
+        });
+    }
+
+    //인증코드 보내기
+    const emailButton = document.getElementById('email-btn');
+
+    if (emailButton) {
+        emailButton.addEventListener('click', event => {
+
+            fetch(`/user/mail`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: document.getElementById('email').value,
+                })
+            })
+                .then((response) => {
+                    if(response.ok){
+                        $("#emailForm").hide();
+                        $("#checkCodeForm").show();
+                    } else {
+                        alert('이미 등록된 Email 입니다.');
+                        location.replace('/user/introduce');
+                    }
+
+                });
+        });
+    }
+
+//인증코드 확인
+    const checkCodeButton = document.getElementById('checkCode-btn');
+
+    if (checkCodeButton) {
+        checkCodeButton.addEventListener('click', event => {
+
+            fetch(`/user/mailcompare`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: document.getElementById('email').value,
+                    code: document.getElementById('checkCode').value,
+                })
+            })
+                .then((response) => {
+                    if(response.ok){
+                        $("#checkCodeForm").hide();
+                        $("#submitForm").show();
+                    } else {
+                        alert('인증코드가 틀렸습니다.');
+                        location.replace('/user/sign-up');
+                    }
+
+                });
+        });
+    }
 
 
     // 생성 기능
@@ -290,3 +373,7 @@ function showProfile() {
         }
     })
 }
+
+
+
+
