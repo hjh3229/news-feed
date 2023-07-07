@@ -15,7 +15,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/newsfeed")
 public class FeedController {
 
     private final FeedService feedService;

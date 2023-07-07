@@ -88,16 +88,16 @@ public class WebSecurityConfig {
                 authorizeHttpRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
                         .requestMatchers("/").permitAll() // 메인 페이지 요청 허가
-                        .requestMatchers("/newsfeed/user/**").permitAll() // 회원가입, 로그인 요청 모두 접근 허가
-                        .requestMatchers("/newsfeed/feeds/**").permitAll() // Feed 조회 요청 모두 접근 허가
-                        .requestMatchers("/newsfeed/folders/**").permitAll() // folder 조회 요청 모두 접근 허가
-                        .requestMatchers("/newsfeed/user-info/").permitAll()
+                        .requestMatchers("/user/**").permitAll() // 회원가입, 로그인 요청 모두 접근 허가
+                        .requestMatchers("/feeds/**").permitAll() // Feed 조회 요청 모두 접근 허가
+                        .requestMatchers("/folders/**").permitAll() // folder 조회 요청 모두 접근 허가
+                        .requestMatchers("/user-info/").permitAll()
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         );
 
         http.formLogin((formLogin) ->
                 formLogin
-                        .loginPage("/newsfeed/user/login-page")
+                        .loginPage("/user/login-page")
                         .loginProcessingUrl("/")
                         .permitAll()
         );

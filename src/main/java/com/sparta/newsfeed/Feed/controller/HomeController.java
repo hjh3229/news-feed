@@ -29,7 +29,7 @@ public class HomeController {
     }
 
     // feedlist, folderlist page
-    @GetMapping("newsfeed/feeds/user={user_id}")
+    @GetMapping("/feeds/user={user_id}")
     public String getFeedsByUser(@PathVariable Long user_id, Model model) {
         List<FeedResponseDto> feeds = feedService.getFeedsByUser(user_id);
         model.addAttribute("feeds", feeds);
@@ -39,7 +39,7 @@ public class HomeController {
     }
 
     //feed create, update page
-    @GetMapping("newsfeed/feed")
+    @GetMapping("/feed")
     public String getFeed(@RequestParam(required = false) Long feed_id, Model model) {
         if(feed_id==null) {
             model.addAttribute("feed", new FeedResponseDto());
@@ -51,7 +51,7 @@ public class HomeController {
     }
 
     //folder create
-    @GetMapping("newsfeed/folder")
+    @GetMapping("/folder")
     public String getfolder(@RequestParam(required = false) Long folder_id, Model model) {
         if(folder_id==null) {
             model.addAttribute("folder", new FolderResponseDto());
@@ -63,7 +63,7 @@ public class HomeController {
     }
 
     // Feedlist in folder
-    @GetMapping("newsfeed/feeds/folders")
+    @GetMapping("/feeds/folders")
     public String getFeedsByFolder(@RequestParam Long folder_id, Model model) {
         List<FeedResponseDto> feeds = feedService.getFeedsByFolder(folder_id);
         model.addAttribute("feeds",feeds);
