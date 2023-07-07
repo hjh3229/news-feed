@@ -37,7 +37,13 @@ public class FolderService {
     public List<FolderResponseDto> getFolders(Long user_id){
         return folderRepository.findAllByUserId(user_id).stream().map(FolderResponseDto::new).toList();
     }
-
+    @Transactional(readOnly = true)
+    public FolderResponseDto getFolder(Long folder_id){
+        Folder folder = folderRepository.findById(folder_id).orElseThrow(
+                ()-> new NullPointerException("not found folder")
+        );
+        return new FolderResponseDto(folder);
+    }
     // DB에 있는 데이터인지 확인
     private boolean isExistFolderName(String folderName, List<Folder> existFolderList) {
         for(Folder existFolder : existFolderList){

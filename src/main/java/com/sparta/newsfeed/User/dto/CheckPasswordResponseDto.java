@@ -6,9 +6,10 @@ import lombok.Getter;
 
 public class CheckPasswordResponseDto {
 
-    boolean checkPassword;
+    private Integer statusCode;
 
-    public CheckPasswordResponseDto(boolean checkPassword) {
-        this.checkPassword = checkPassword;
+
+    public CheckPasswordResponseDto(Integer statusCode) {
+        this.statusCode = statusCode;
     }
 }

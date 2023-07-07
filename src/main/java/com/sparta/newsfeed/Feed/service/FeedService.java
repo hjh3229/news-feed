@@ -44,16 +44,24 @@ public class FeedService {
         return feedRepository.findAllByUserId(userId).stream().map(FeedResponseDto::new).toList();
     }
 
+//    @Transactional(readOnly = true)
+//    public List<FeedResponseDto> getFeedsByFolder(Long folderId, User user) {
+//        List<Feed> feedList = feedRepository.findAllByUserAndFeedFolderList_FolderId(user, folderId);
+//        List<FeedResponseDto> responseDtoList = new ArrayList<>();
+//        for (Feed feed : feedList) {
+//            responseDtoList.add(new FeedResponseDto(feed));
+//        }
+//        return responseDtoList;
+//    }
     @Transactional(readOnly = true)
-    public List<FeedResponseDto> getFeedsByFolder(Long folderId, User user) {
-        List<Feed> feedList = feedRepository.findAllByUserAndFeedFolderList_FolderId(user, folderId);
+    public List<FeedResponseDto> getFeedsByFolder(Long folderId) {
+        List<Feed> feedList = feedRepository.findAllByFeedFolderList_FolderId(folderId);
         List<FeedResponseDto> responseDtoList = new ArrayList<>();
         for (Feed feed : feedList) {
             responseDtoList.add(new FeedResponseDto(feed));
         }
         return responseDtoList;
     }
-  
       public FeedResponseDto getFeed(Long feed_id) {
         Feed feed = feedRepository.findById(feed_id).orElseThrow(
                 ()->new NullPointerException("not found Feed")
@@ -100,11 +108,12 @@ public class FeedService {
         Optional<FeedFolder> overlapFolder = feedFolderRepository.findByFeedAndFolder(feed,folder);
 
         if(overlapFolder.isPresent()){
-            throw new IllegalArgumentException("중복된 촐더입니다.");
+            throw new IllegalArgumentException("중복된 폴더입니다.");
         }
         feedFolderRepository.save(new FeedFolder(feed,folder));
     }
 
+    @Transactional
     public void like(Long feedId, Long userId) {
         Feed feed = feedRepository.findById(feedId).orElseThrow(() ->
                 new IllegalArgumentException("해당 피드가 존재하지 않습니다.")

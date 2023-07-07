@@ -79,12 +79,14 @@ $(document).ready(function () {
                 });
         });
     }
+
+    // 좋아요 기능
     const likeButton = document.getElementById('like-btn');
 
     if (likeButton) {
         likeButton.addEventListener('click', event => {
             let id = document.getElementById('feed-id').value;
-            fetch(`/feed/${id}/like`, {
+            fetch(`newsfeed/feed/${id}/like`, {
                 method: 'POST'
             })
                 .then(() => {
@@ -93,6 +95,69 @@ $(document).ready(function () {
                 });
         });
     }
+    //댓글 입력 기능
+    const commentButton = document.getElementById('comment-btn');
+
+    if (commentButton) {
+        commentButton.addEventListener('click', event => {
+            let id = document.getElementById('feed-id').value;
+            fetch(`newsfeed/comment/${id}`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    comments: document.getElementById('comments').value,
+                })
+            })
+                .then(() => {
+                    alert('댓글달기 성공!');
+                    location.replace('/');
+                });
+        });
+    }
+
+    // 댓글 수정 기능
+    const commentUpdateButton = document.getElementById('commentUpdate-btn');
+
+    if (commentUpdateButton) {
+        commentUpdateButton.addEventListener('click', event => {
+            let id = document.getElementById('comment-id').value;
+
+            fetch(`/newsfeed/comment/${id}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    comments: document.getElementById('comment').value,
+                })
+            })
+                .then(() => {
+                    alert('수정이 완료되었습니다.');
+
+                    location.replace(`/`);
+                });
+        });
+    }
+
+    // 댓글 삭제 기능
+    const commentDeleteButton = document.getElementById('commentDelete-btn');
+
+    if (commentDeleteButton) {
+        commentDeleteButton.addEventListener('click', event => {
+            let id = document.getElementById('comment-id').value;
+
+            fetch(`/newsfeed/comment/${id}`, {
+                method: 'DELETE'
+            })
+                .then(() => {
+                    alert('삭제가 완료되었습니다.');
+                    location.replace('/');
+                });
+        });
+    }
+
     // profile 수정 기능
     const modifyIntroButton = document.getElementById('modifyIntro-btn');
 
@@ -130,12 +195,18 @@ $(document).ready(function () {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    new_password: document.getElementById('checkPassword').value,
+                    password: document.getElementById('checkPassword').value,
                 })
             })
-                .then(() => {
-                    $("#passwordForm").hide();
-                    $("#newPasswordForm").show();
+                .then((response) => {
+                    if(response.ok){
+                        $("#passwordForm").hide();
+                        $("#newPasswordForm").show();
+                    } else {
+                        alert('비밀번호가 틀렸습니다.');
+                        location.replace('/newsfeed/user/introduce');
+                    }
+
                 });
         });
     }
@@ -161,7 +232,26 @@ $(document).ready(function () {
                 });
         });
     }
+    // 폴더 생성 기능
+    const folderCreateButton = document.getElementById('folderCreate-btn');
 
+    if (folderCreateButton) {
+        folderCreateButton.addEventListener('click', event => {
+            fetch('/newsfeed/folder', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    title: document.getElementById('title').value,
+                })
+            })
+                .then(() => {
+                    alert('등록 완료되었습니다.');
+                    location.replace('/');
+                });
+        });
+    }
 
 
 
