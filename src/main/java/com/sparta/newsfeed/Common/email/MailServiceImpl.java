@@ -118,11 +118,12 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public String compareCode(MailDto mailDto){
-        Mail mail = mailRepository.findByEmail(mailDto.getEmail()).orElse(null);
+    public String compareCode(CodeDto codeDto){
+        Mail mail = mailRepository.findByEmail(codeDto.getEmail()).orElse(null);
 
 
-        if(!mailDto.getCode().equals(mail.getEmail_code())){
+
+        if(!codeDto.getCode().equals(mail.getEmail_code())){
             throw new IllegalArgumentException("인증번호가 일치하지 않습니다.");
         }
 
