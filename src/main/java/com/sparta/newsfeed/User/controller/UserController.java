@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/newsfeed")
 public class UserController {
 
     private final UserService userService;
@@ -20,7 +19,7 @@ public class UserController {
     @PostMapping("/user/sign-up")
     public String createUser(SignupRequestDto requestDto){
         userService.createUser(requestDto);
-        return "redirect:/newsfeed/user/login-page";
+        return "redirect:/user/login-page";
     }
 
     @GetMapping("/user-info")

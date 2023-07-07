@@ -15,17 +15,17 @@ public class UserViewController {
 
     private final UserService userService;
 
-    @GetMapping("/newsfeed/user/login-page")
+    @GetMapping("/user/login-page")
     public String login(){
         return "login";
     }
 
-    @GetMapping("/newsfeed/user/signup-page")
+    @GetMapping("/user/signup-page")
     public String signup(){
         return "signup";
     }
 
-    @GetMapping("/newsfeed/user/introduce")
+    @GetMapping("/user/introduce")
     public String selecteIntroduce(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model){
         IntroduceResponseDto userintro = userService.selecteIntroduce(userDetails.getUser().getId());
         model.addAttribute("userintro",userintro);

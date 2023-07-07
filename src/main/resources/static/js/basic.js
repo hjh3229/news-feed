@@ -16,7 +16,7 @@ $(document).ready(function () {
 
     if (createButton) {
         createButton.addEventListener('click', event => {
-            fetch('/newsfeed/feed', {
+            fetch('/feed', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -43,7 +43,7 @@ $(document).ready(function () {
             let params = new URLSearchParams(location.search);
             let id = params.get('feed_id');
 
-            fetch(`/newsfeed/feed/${id}`, {
+            fetch(`/feed/${id}`, {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json",
@@ -70,7 +70,7 @@ $(document).ready(function () {
             let params = new URLSearchParams(location.search);
             let id = params.get('feed_id');
 
-            fetch(`/newsfeed/feed/${id}`, {
+            fetch(`/feed/${id}`, {
                 method: 'DELETE'
             })
                 .then(() => {
@@ -86,7 +86,7 @@ $(document).ready(function () {
     if (likeButton) {
         likeButton.addEventListener('click', event => {
             let id = document.getElementById('feed-id').value;
-            fetch(`newsfeed/feed/${id}/like`, {
+            fetch(`/feed/${id}/like`, {
                 method: 'POST'
             })
                 .then(() => {
@@ -101,7 +101,7 @@ $(document).ready(function () {
     if (commentButton) {
         commentButton.addEventListener('click', event => {
             let id = document.getElementById('feed-id').value;
-            fetch(`newsfeed/comment/${id}`, {
+            fetch(`/comments/${id}`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -124,7 +124,7 @@ $(document).ready(function () {
         commentUpdateButton.addEventListener('click', event => {
             let id = document.getElementById('comment-id').value;
 
-            fetch(`/newsfeed/comment/${id}`, {
+            fetch(`/comments/${id}`, {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json",
@@ -148,7 +148,7 @@ $(document).ready(function () {
         commentDeleteButton.addEventListener('click', event => {
             let id = document.getElementById('comment-id').value;
 
-            fetch(`/newsfeed/comment/${id}`, {
+            fetch(`/comments/${id}`, {
                 method: 'DELETE'
             })
                 .then(() => {
@@ -164,7 +164,7 @@ $(document).ready(function () {
     if (modifyIntroButton) {
         modifyIntroButton.addEventListener('click', event => {
 
-            fetch(`/newsfeed/introduce`, {
+            fetch(`/introduce`, {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json",
@@ -189,7 +189,7 @@ $(document).ready(function () {
     if (checkPasswordButton) {
         checkPasswordButton.addEventListener('click', event => {
 
-            fetch(`/newsfeed/password`, {
+            fetch(`/password`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -204,7 +204,7 @@ $(document).ready(function () {
                         $("#newPasswordForm").show();
                     } else {
                         alert('비밀번호가 틀렸습니다.');
-                        location.replace('/newsfeed/user/introduce');
+                        location.replace('/user/introduce');
                     }
 
                 });
@@ -217,7 +217,7 @@ $(document).ready(function () {
     if (newPasswordButton) {
         newPasswordButton.addEventListener('click', event => {
 
-            fetch(`/newsfeed/password`, {
+            fetch(`/password`, {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json",
@@ -237,7 +237,7 @@ $(document).ready(function () {
 
     if (folderCreateButton) {
         folderCreateButton.addEventListener('click', event => {
-            fetch('/newsfeed/folder', {
+            fetch('/folder', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -268,19 +268,19 @@ function getToken() {
 function showProfile() {
     $.ajax({
         type: 'GET',
-        url: `/newsfeed/user-info`,
+        url: `/user-info`,
         success: function (response) {
             $('#profile').empty();
             $('#profile').append(`
                 <div class="header" style="float:left">
                     <div class="card-body p-5 text-center">
-                        <a href ="/newsfeed/feeds/user=${response.user_id}"
+                        <a href ="/feeds/user=${response.user_id}"
                         class="logo" style="font-weight: 200; color: inherit">
                         <p>${response.nickname}</p>
                         <p>${response.myContent}</p></a><br>
-                        <button type="button" style="width: 120px;" onclick="location.href='/newsfeed/feed'" class="btn btn-dark">Feed 추가</button><br><br>
-                        <button type="button" style="width: 120px;" class="btn btn-light" onclick="location.href='/newsfeed/user/introduce'">프로필 수정</button><br><br>
-                        <button type="button"style="width: 120px;"  class="btn btn-secondary" onclick="location.href='/newsfeed/user/loin-page'">로그아웃</button>
+                        <button type="button" style="width: 120px;" onclick="location.href='/feed'" class="btn btn-dark">Feed 추가</button><br><br>
+                        <button type="button" style="width: 120px;" class="btn btn-light" onclick="location.href='/user/introduce'">프로필 수정</button><br><br>
+                        <button type="button"style="width: 120px;"  class="btn btn-secondary" onclick="location.href='/user/loin-page'">로그아웃</button>
                     </div>
                 </div>
             `)

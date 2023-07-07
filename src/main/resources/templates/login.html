@@ -32,7 +32,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary" onclick="onLogin()">Login</button>
                     <div class ="mb-3">
-                    <button type="button" class="btn btn-secondary mt-3" onclick="location.href='/newsfeed/user/signup-page'">회원가입</button>
+                    <button type="button" class="btn btn-secondary mt-3" onclick="location.href='/user/signup-page'">회원가입</button>
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
 
         $.ajax({
             type: "POST",
-            url: `/newsfeed/user/log-in`,
+            url: `/user/log-in`,
             contentType: "application/json",
             data: JSON.stringify({username: username, password: password}),
         })
@@ -80,7 +80,7 @@
             })
             .fail(function (jqXHR, textStatus) {
                 alert("Login Fail");
-                window.location.href = host + '/newsfeed/user/login-page'
+                window.location.href = host + '/user/login-page'
             });
     }
 </script>
