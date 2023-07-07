@@ -2,10 +2,13 @@ package com.sparta.newsfeed.Common.email;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 
 public interface MailService {
+
 
     // 메일 내용 작성
     MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException;
@@ -16,5 +19,7 @@ public interface MailService {
 
     // 메일 발송
     String sendSimpleMessage(String to) throws Exception;
+
+    String compareCode(MailDto mailDto);
 }
 

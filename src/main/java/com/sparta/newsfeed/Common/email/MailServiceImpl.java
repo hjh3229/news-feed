@@ -1,18 +1,24 @@
 package com.sparta.newsfeed.Common.email;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Random;
 
+import com.sparta.newsfeed.Common.email.entity.Mail;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Random;
 
 @Service
+@RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
+    private final MailRepository mailRepository;
 
     @Autowired
     JavaMailSender emailsender; // Bean 등록해둔 MailConfig 를 emailsender 라는 이름으로 autowired
@@ -86,20 +92,40 @@ public class MailServiceImpl implements MailService {
     // MimeMessage 객체 안에 내가 전송할 메일의 내용을 담는다.
     // 그리고 bean 으로 등록해둔 javaMail 객체를 사용해서 이메일 send!!
     @Override
+    @Transactional
     public String sendSimpleMessage(String to) throws Exception {
 
-        ePw = createKey(); // 랜덤 인증번호 생성
+        //이메일 중복이 없으면 실행
+        if(!mailRepository.existsByEmail(to)){
+            ePw = createKey(); // 랜덤 인증번호 생성
+            Mail mail = new Mail(to, ePw);
 
-        // TODO Auto-generated method stub
-        MimeMessage message = createMessage(to); // 메일 발송
-        try {// 예외처리
-            emailsender.send(message);
-        } catch (MailException es) {
-            es.printStackTrace();
-            throw new IllegalArgumentException();
+            // TODO Auto-generated method stub
+            MimeMessage message = createMessage(to); // 메일 발송
+
+            try {// 예외처리
+                emailsender.send(message);
+            } catch (MailException es) {
+                es.printStackTrace();
+                throw new IllegalArgumentException();
+            }
+            mailRepository.save(mail);
+            return "인증번호가 전송되었습니다."+ePw;
         }
 
-
-        return ePw; // 메일로 보냈던 인증 코드를 서버로 반환
+        return "전송된 인증코드를 입력해주세요"; // 메일로 보냈던 인증 코드를 서버로 반환
     }
+
+
+    @Override
+    public String compareCode(MailDto mailDto){
+        Mail mail = mailRepository.findByEmail(mailDto.getEmail()).orElse(null);
+
+
+        if(!mailDto.getCode().equals(mail.getEmail_code())){
+            throw new IllegalArgumentException("인증번호가 일치하지 않습니다.");
+        }
+
+        return "인증되었습니다.";
+    };
 }

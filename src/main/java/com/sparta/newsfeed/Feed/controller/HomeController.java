@@ -5,6 +5,7 @@ import com.sparta.newsfeed.Feed.service.FeedService;
 import com.sparta.newsfeed.Folder.dto.FolderResponseDto;
 import com.sparta.newsfeed.Folder.service.FolderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
